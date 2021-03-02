@@ -21,7 +21,7 @@ namespace Galaga
         public Game() {
 
             window = new Window("Galaga", 500, 500);
-            gameTimer = new GameTimer(30, 30);
+            gameTimer = new GameTimer(60, 60);
             player = new Player(
                 new DynamicShape(new Vec2F(0.45f, 0.1f), new Vec2F(0.1f, 0.1f)),
                 new Image(Path.Combine("Assets", "Images", "Player.png")));
@@ -49,7 +49,7 @@ namespace Galaga
         private void IterateShots() {
             playerShots.Iterate(shot => {
 
-                shot.Shape.Move(new Vec2F(0.0f, 0.01f));
+                shot.Shape.Move();
 
                 if (shot.Shape.Position.Y > 1.0f) {
                     shot.DeleteEntity();
@@ -96,7 +96,7 @@ namespace Galaga
                 if (gameTimer.ShouldReset())
                 {
                     // this update happens once every second
-                    window.Title = $"Galaga | (UPS,FPS): ({playerShots.CountEntities()},{ enemies.CountEntities()})";
+                    window.Title = $"Galaga | (UPS,FPS): ({gameTimer.CapturedUpdates},{ gameTimer.CapturedFrames})";
                 }
             }
         }
