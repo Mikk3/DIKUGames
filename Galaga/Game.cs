@@ -61,7 +61,6 @@ namespace Galaga
                         if (data.Collision) {
                             shot.DeleteEntity();
                             enemy.DeleteEntity();
-
                         }
 
                     });
@@ -87,8 +86,8 @@ namespace Galaga
                 {
                     window.Clear();
                     player.Render();
-                    enemies.RenderEntities();
                     playerShots.RenderEntities();
+                    enemies.RenderEntities();
                     window.SwapBuffers();
                 }
 

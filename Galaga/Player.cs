@@ -59,8 +59,7 @@ namespace Galaga
 
         public Vec2F GetTipPosition() {
             // returns the position of the tip of the player
-            return shape.Position;
-            //return shape.Position + new Vec2F(shape.Extent.X / 2, shape.Extent.Y);
+            return shape.Position + new Vec2F(shape.Extent.X / 2, shape.Extent.Y);
         }
 
     }
