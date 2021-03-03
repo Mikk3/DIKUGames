@@ -7,10 +7,8 @@ using DIKUArcade.Math;
 using DIKUArcade.EventBus;
 using System.Collections.Generic;
 using DIKUArcade.Physics;
-namespace Galaga
-{
-    public class Game : IGameEventProcessor<object>
-    {
+namespace Galaga {
+    public class Game : IGameEventProcessor<object> {
         private GameEventBus<object> eventBus;
         private Player player;
         private Window window;
@@ -18,8 +16,10 @@ namespace Galaga
         private EntityContainer<Enemy> enemies;
         private EntityContainer<PlayerShot> playerShots;
         private IBaseImage playerShotImage;
+        private AnimationContainer enemyExplosions;
+        private List<Image> explosionStrides;
+        private const int EXPLOSION_LENGTH_MS = 500;
         public Game() {
-
             window = new Window("Galaga", 500, 500);
             gameTimer = new GameTimer(60, 60);
             player = new Player(
@@ -44,6 +44,13 @@ namespace Galaga
             playerShots = new EntityContainer<PlayerShot>();
             playerShotImage = new Image(Path.Combine("Assets", "Images", "BulletRed2.png"));
 
+            // Exploding enemies
+            enemyExplosions = new AnimationContainer(numEnemies);
+            explosionStrides = ImageStride.CreateStrides(8, Path.Combine("Assets", "Images", "Explosion.png"));
+        }
+
+        public void AddExplosion(Vec2F position, Vec2F extent) {
+            enemyExplosions.AddAnimation(new StationaryShape(position, extent), EXPLOSION_LENGTH_MS, new ImageStride(EXPLOSION_LENGTH_MS / 8, explosionStrides));
         }
 
         private void IterateShots() {
@@ -53,14 +60,14 @@ namespace Galaga
 
                 if (shot.Shape.Position.Y > 1.0f) {
                     shot.DeleteEntity();
-                }
-                else {
+                } else {
                     enemies.Iterate(enemy => {
                         var data = CollisionDetection.Aabb(shot.Shape.AsDynamicShape(), enemy.Shape);
 
                         if (data.Collision) {
                             shot.DeleteEntity();
                             enemy.DeleteEntity();
+                            AddExplosion(enemy.Shape.Position, enemy.Shape.Extent);
                         }
 
                     });
@@ -69,43 +76,37 @@ namespace Galaga
         }
 
 
-        public void Run()
-        {
-            while (window.IsRunning())
-            {
+        public void Run() {
+            while (window.IsRunning()) {
                 gameTimer.MeasureTime();
-                while (gameTimer.ShouldUpdate())
-                {
+                while (gameTimer.ShouldUpdate()) {
                     window.PollEvents();
                     eventBus.ProcessEvents();
                     player.Move();
                     IterateShots();
                 }
 
-                if (gameTimer.ShouldRender())
-                {
+                if (gameTimer.ShouldRender()) {
                     window.Clear();
                     player.Render();
                     playerShots.RenderEntities();
                     enemies.RenderEntities();
+                    enemyExplosions.RenderAnimations();
                     window.SwapBuffers();
                 }
 
 
 
-                if (gameTimer.ShouldReset())
-                {
+                if (gameTimer.ShouldReset()) {
                     // this update happens once every second
                     window.Title = $"Galaga | (UPS,FPS): ({gameTimer.CapturedUpdates},{ gameTimer.CapturedFrames})";
                 }
             }
         }
 
-        public void KeyPress(string key)
-        {
+        public void KeyPress(string key) {
             // TODO: switch on key string and set the player's move direction
-            switch (key)
-            {
+            switch (key) {
                 case "KEY_LEFT":
                     player.SetMoveLeft(true);
                     break;
@@ -117,10 +118,8 @@ namespace Galaga
             }
         }
 
-        public void KeyRelease(string key)
-        {
-            switch (key)
-            {
+        public void KeyRelease(string key) {
+            switch (key) {
                 case "KEY_LEFT":
                     player.SetMoveLeft(false);
                     break;
@@ -142,8 +141,7 @@ namespace Galaga
 
         public void ProcessEvent(GameEventType type, GameEvent<object> gameEvent) {
 
-            switch (gameEvent.Parameter1)
-            {
+            switch (gameEvent.Parameter1) {
                 case "KEY_PRESS":
                     KeyPress(gameEvent.Message);
                     break;

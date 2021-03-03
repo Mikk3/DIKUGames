@@ -1,10 +1,8 @@
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
-namespace Galaga
-{
-    public class Player
-    {
+namespace Galaga {
+    public class Player {
         private Entity entity;
         private DynamicShape shape;
 
@@ -52,8 +50,7 @@ namespace Galaga
             }
             UpdateDirection();
         }
-        private void UpdateDirection()
-        {
+        private void UpdateDirection() {
             shape.ChangeDirection(new Vec2F((moveLeft + moveRight), 0.0f));
         }
 
