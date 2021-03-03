@@ -7,6 +7,7 @@ using DIKUArcade.Math;
 using DIKUArcade.EventBus;
 using System.Collections.Generic;
 using DIKUArcade.Physics;
+
 namespace Galaga {
     public class Game : IGameEventProcessor<object> {
         private GameEventBus<object> eventBus;
@@ -19,6 +20,7 @@ namespace Galaga {
         private AnimationContainer enemyExplosions;
         private List<Image> explosionStrides;
         private const int EXPLOSION_LENGTH_MS = 500;
+
         public Game() {
             window = new Window("Galaga", 500, 500);
             gameTimer = new GameTimer(60, 60);
@@ -37,7 +39,9 @@ namespace Galaga {
             const int numEnemies = 8;
             enemies = new EntityContainer<Enemy>(numEnemies);
             for (int i = 0; i < numEnemies; i++) {
-                enemies.AddEntity(new Enemy(new DynamicShape(new Vec2F(0.1f + (float)i * 0.1f, 0.9f), new Vec2F(0.1f, 0.1f)), new ImageStride(80, images)));
+                enemies.AddEntity(new Enemy(
+                    new DynamicShape(new Vec2F(0.1f + (float)i * 0.1f, 0.9f), new Vec2F(0.1f, 0.1f)), new ImageStride(80, images)
+                    ));
             }
 
             // Player shooting
@@ -50,31 +54,30 @@ namespace Galaga {
         }
 
         public void AddExplosion(Vec2F position, Vec2F extent) {
-            enemyExplosions.AddAnimation(new StationaryShape(position, extent), EXPLOSION_LENGTH_MS, new ImageStride(EXPLOSION_LENGTH_MS / 8, explosionStrides));
+            enemyExplosions.AddAnimation(
+                new StationaryShape(position, extent),
+                EXPLOSION_LENGTH_MS,
+                new ImageStride(EXPLOSION_LENGTH_MS / 8, explosionStrides)
+            );
         }
 
         private void IterateShots() {
             playerShots.Iterate(shot => {
-
                 shot.Shape.Move();
-
                 if (shot.Shape.Position.Y > 1.0f) {
                     shot.DeleteEntity();
                 } else {
                     enemies.Iterate(enemy => {
                         var data = CollisionDetection.Aabb(shot.Shape.AsDynamicShape(), enemy.Shape);
-
                         if (data.Collision) {
                             shot.DeleteEntity();
                             enemy.DeleteEntity();
                             AddExplosion(enemy.Shape.Position, enemy.Shape.Extent);
                         }
-
                     });
                 }
             });
         }
-
 
         public void Run() {
             while (window.IsRunning()) {
@@ -85,7 +88,6 @@ namespace Galaga {
                     player.Move();
                     IterateShots();
                 }
-
                 if (gameTimer.ShouldRender()) {
                     window.Clear();
                     player.Render();
@@ -94,9 +96,6 @@ namespace Galaga {
                     enemyExplosions.RenderAnimations();
                     window.SwapBuffers();
                 }
-
-
-
                 if (gameTimer.ShouldReset()) {
                     // this update happens once every second
                     window.Title = $"Galaga | (UPS,FPS): ({gameTimer.CapturedUpdates},{ gameTimer.CapturedFrames})";
@@ -105,7 +104,6 @@ namespace Galaga {
         }
 
         public void KeyPress(string key) {
-            // TODO: switch on key string and set the player's move direction
             switch (key) {
                 case "KEY_LEFT":
                     player.SetMoveLeft(true);
@@ -130,17 +128,14 @@ namespace Galaga {
                     window.CloseWindow();
                     break;
                 case "KEY_SPACE":
-                    //shooting logic
                     playerShots.AddEntity(new PlayerShot(player.GetTipPosition(), playerShotImage));
                     break;
                 default:
                     break;
             }
-            // TODO: Close window if escape is pressed
         }
 
         public void ProcessEvent(GameEventType type, GameEvent<object> gameEvent) {
-
             switch (gameEvent.Parameter1) {
                 case "KEY_PRESS":
                     KeyPress(gameEvent.Message);
