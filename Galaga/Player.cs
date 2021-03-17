@@ -1,8 +1,9 @@
 using DIKUArcade.Entities;
+using DIKUArcade.EventBus;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 namespace Galaga {
-    public class Player {
+    public class Player : IGameEventProcessor<object> {
         private Entity entity;
         private DynamicShape shape;
         private float moveLeft = 0.0f;
@@ -54,7 +55,46 @@ namespace Galaga {
 
         public Vec2F GetTipPosition() {
             // returns the position of the tip of the player
-            return shape.Position + new Vec2F(shape.Extent.X / 2, shape.Extent.Y);
+            return shape.Position + new Vec2F(shape.Extent.X / 2, 0.0f);
+        }
+
+        private void KeyPress(string key) {
+            switch (key) {
+                case "KEY_LEFT":
+                    SetMoveLeft(true);
+                    break;
+                case "KEY_RIGHT":
+                    SetMoveRight(true);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void KeyRelease(string key) {
+            switch (key) {
+                case "KEY_LEFT":
+                    SetMoveLeft(false);
+                    break;
+                case "KEY_RIGHT":
+                    SetMoveRight(false);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public void ProcessEvent(GameEventType type, GameEvent<object> gameEvent) {
+            switch (gameEvent.Parameter1) {
+                case "KEY_PRESS":
+                    KeyPress(gameEvent.Message);
+                    break;
+                case "KEY_RELEASE":
+                    KeyRelease(gameEvent.Message);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
