@@ -96,10 +96,7 @@ namespace Galaga {
                         if (data.Collision) {
                             shot.DeleteEntity();
                             enemy.Damage();
-
-                            if (enemy.hitpoints < 10) {
-                                enemy.Enrage();
-                             } 
+                            enemy.Enrage();
                             
                             if (enemy.isDead()) {
                                 score.AddPoint();
@@ -129,7 +126,7 @@ namespace Galaga {
             foreach (var squadron in squadrons) {
                 liveEnemies += squadron.Enemies.CountEntities();
             }
-            if (liveEnemies == 0) {
+            if (liveEnemies < 1) {
                 Enemy.IncreaseDifficulty();
 
                 foreach (var squadron in squadrons)
