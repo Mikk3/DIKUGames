@@ -7,10 +7,8 @@ namespace Galaga.MovementStrategy {
             var s = -enemy.Speed;
             var p = 0.085f;
             var a = 0.1f;
-
             enemy.Shape.Position.X = 0.45f + a * MathF.Sin( (2 * MathF.PI * (0.5f - enemy.Shape.Position.Y) / p) );
             enemy.Shape.Position.Y += s;
-
         }
 
         public void MoveEnemies(EntityContainer<Enemy> enemies) {

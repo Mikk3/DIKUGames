@@ -5,16 +5,15 @@ using System.IO;
 namespace Galaga {
     public class Enemy : Entity {
         private static float GlobalSpeed = 1;
-
         public int hitpoints { get; private set; }
         public float Speed { get; private set; }
         private IBaseImage alternativeImage;
 
-        public Enemy(DynamicShape shape, IBaseImage image, IBaseImage alternativeImage, float speed) : base(shape, image) {
+        public Enemy(DynamicShape shape, IBaseImage image, IBaseImage alternativeImage, float speed) :
+        base(shape, image) {
             hitpoints = 2;
             Speed = speed * GlobalSpeed;
             this.alternativeImage = alternativeImage;    
-
         }
 
         public void Damage() {
@@ -23,7 +22,6 @@ namespace Galaga {
         
         public bool isDead() {
             return hitpoints < 1;
-
         }
 
         public void Enrage() {

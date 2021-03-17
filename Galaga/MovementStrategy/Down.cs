@@ -6,7 +6,6 @@ namespace Galaga.MovementStrategy {
         public void MoveEnemy(Enemy enemy) {
             enemy.Shape.AsDynamicShape().Direction = new Vec2F(0.0f, -enemy.Speed);
             enemy.Shape.AsDynamicShape().Move();
-            
         }
 
         public void MoveEnemies(EntityContainer<Enemy> enemies) {
