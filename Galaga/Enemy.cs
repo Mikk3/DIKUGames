@@ -7,7 +7,7 @@ namespace Galaga {
         private static float GlobalSpeed = 1;
         public int hitpoints { get; private set; }
         public float Speed { get; private set; }
-        private IBaseImage alternativeImage;
+        public IBaseImage alternativeImage { get; private set; }
 
         public Enemy(DynamicShape shape, IBaseImage image, IBaseImage alternativeImage, float speed) :
         base(shape, image) {

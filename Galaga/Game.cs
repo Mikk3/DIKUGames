@@ -122,7 +122,6 @@ namespace Galaga {
                 liveEnemies += squadron.Enemies.CountEntities();
             }
             if (liveEnemies < 1) {
-                //  increasing enemy base speed by 25%
                 Enemy.IncreaseDifficulty();
                 foreach (var squadron in squadrons) {
                     squadron.CreateEnemies(enemyStridesBlue, enemyStridesRed);
