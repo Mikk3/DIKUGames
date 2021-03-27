@@ -26,13 +26,6 @@ namespace GalagaTest {
 
             stateMachine = new StateMachine();
             eventBus.Subscribe(GameEventType.GameStateEvent, stateMachine);
-            
-            
-            // Here you should:
-            // (1) Initialize a GalagaBus with proper GameEventTypes
-            // (2) Instantiate the StateMachine
-            // (3) Subscribe the GalagaBus to proper GameEventTypes
-            // and GameEventProcessors
 
             }
         [Test]

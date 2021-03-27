@@ -52,7 +52,7 @@ namespace DIKUArcade.State {
 
         public void RenderState() {
             backGroundImage.RenderEntity();
-
+        
             menuButtons[0].RenderText();
             menuButtons[1].RenderText();
 
