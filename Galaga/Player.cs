@@ -5,10 +5,10 @@ using DIKUArcade.Math;
 namespace Galaga {
     public class Player : IGameEventProcessor<object> {
         private Entity entity;
-        private DynamicShape shape;
+        public DynamicShape shape { get; private set; }
         private float moveLeft = 0.0f;
         private float moveRight = 0.0f;
-        private const float MOVEMENT_SPEED = 0.01f;
+        public readonly float MOVEMENT_SPEED = 0.01f;
 
         public Player(DynamicShape shape, IBaseImage image) {
             entity = new Entity(shape, image);

@@ -7,6 +7,7 @@ using DIKUArcade.Math;
 using System.Collections.Generic;
 using Galaga.MovementStrategy;
 using Galaga.Squadron;
+using System;
 
 namespace GalagaTest
 {
@@ -15,6 +16,7 @@ namespace GalagaTest
         [SetUp]
         public void Setup()
         {
+            DIKUArcade.Window.CreateOpenGLContext();
             snake = new SnakeSquadron();
             enemyStridesBlue = ImageStride.CreateStrides(4, Path.Combine("..", "Galaga", "Assets", "Images", "BlueMonster.png"));
             enemyStridesRed = ImageStride.CreateStrides(2, Path.Combine("..", "Galaga", "Assets", "Images", "RedMonster.png"));
@@ -35,20 +37,36 @@ namespace GalagaTest
         [Test] 
         public void TestSnakeCorrectMovement()
         {
-            var snake = new SnakeSquadron();
-            snake.CreateEnemies(enemyStridesBlue, enemyStridesRed);
-            var enemy = snake.Enemies;
-            var temp = new List<float>(snake.MaxEnemies);
-            for (var i = 0; i < snake.MaxEnemies; i++) {
-                temp.Add()
+            var nextPosList = new List<Vec2F>(7);
+
+            var p = 0.085f;
+            var a = 0.1f;
+            foreach (Enemy enemy in snake.Enemies)
+            {
+                var s = -enemy.Speed;
+                var pos = new Vec2F();
+
+                pos.X = 0.45f + a * MathF.Sin( (2 * MathF.PI * (0.5f - enemy.Shape.Position.Y) / p) );
+                pos.Y = enemy.Shape.Position.Y + s;
+
+                nextPosList.Add(pos);
             }
-            var tempY = enemy.Shape.Position.Y;
+
+            snake.Move();
+
+            var newPosList = new List<Vec2F>(7);
+            foreach (Enemy enemy in snake.Enemies)
+            {
+                newPosList.Add(enemy.Shape.Position);
+            }
+            
 
             
-        
-            var nextPos = enemy.Shape.Position.X = 0.45f + 0.1f * MathF.Sin((2 * MathF.PI * (0.5f - snake.Shape.Position.Y) / 0.085f) )
-            
-            Assert.
+            for (int i=0; i < 7; i++) {                
+                Assert.IsTrue(Math.Abs(newPosList[i].X - nextPosList[i].X) < 0.00001);
+                Assert.IsTrue(Math.Abs(newPosList[i].Y - nextPosList[i].Y) < 0.00001);
+            }
+
         }
     }
 }

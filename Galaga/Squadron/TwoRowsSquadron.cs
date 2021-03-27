@@ -26,7 +26,7 @@ namespace Galaga.Squadron {
         public void CreateEnemies(List<Image> enemyStrides, List<Image> alternativeEnemyStrides) {
             for (int i = 0; i < 6; i++) {
                 Enemies.AddEntity(new Enemy(
-                    new DynamicShape(new Vec2F(0.1f + ((float) i * (0.7f / 6.0f)), 1.0f),
+                    new DynamicShape(new Vec2F(0.165f + ((float) i * (0.7f / 6.0f)), 1.0f),
                     new Vec2F(0.1f, 0.1f)),
                     new ImageStride(80, enemyStrides),
                     new ImageStride(80, alternativeEnemyStrides),
@@ -35,7 +35,7 @@ namespace Galaga.Squadron {
             }
             for (int i = 0; i < 6; i++) {
                 Enemies.AddEntity(new Enemy(
-                    new DynamicShape(new Vec2F(0.1f + ((float) i * (0.7f / 6.0f)), 0.9f),
+                    new DynamicShape(new Vec2F(0.165f + ((float) i * (0.7f / 6.0f)), 0.9f),
                     new Vec2F(0.1f, 0.1f)),
                     new ImageStride(80, enemyStrides),
                     new ImageStride(80, alternativeEnemyStrides),
