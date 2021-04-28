@@ -1,0 +1,50 @@
+using NUnit.Framework;
+using DIKUArcade.Entities;
+using Breakout.Blocks;
+using DIKUArcade.Math;
+using DIKUArcade.Graphics;
+using System.IO;
+using DIKUArcade.GUI;
+
+namespace BreakoutTests
+{
+    public class BlockTest
+    {
+
+        public Block block;
+
+        [SetUp]
+        public void Setup()
+        {
+            Window.CreateOpenGLContext();
+
+            block = new NormalBlock(
+                new DynamicShape(new Vec2F(0.50f, 0.035f), new Vec2F(0.224f, 0.044f)),
+                new Image(Path.Combine("..", "Assets", "Images", "grey-block.png"))
+            );
+        }
+
+        [Test]
+        public void TestBlockIsEntity() {
+            Assert.That(block, Is.InstanceOf<Entity>());
+        }
+
+        [Test]
+        public void TestDamageTaken()
+        {
+            var oldHealth = block.Health;
+            block.OnHit();
+            Assert.AreEqual(block.Health, oldHealth - 1);
+        }
+
+        [Test]
+        public void TestBlockIsDestroyed()
+        {
+            // x extend: 0,0833333333333333
+            // y extend: 0,0416666666666667
+
+
+            Assert.Fail();
+        }
+    }
+}
