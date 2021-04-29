@@ -24,11 +24,12 @@ namespace Breakout.Paddle {
 
         public void Move() {
             // Right boundary
-            if (shape.Position.X > (0.99f - shape.Extent.X) && shape.Direction.X > 0.0f) {
+            if (shape.Position.X > (0.975f - shape.Extent.X) && shape.Direction.X > 0.0f) {
                 return;
             }
             // Left boundary
-            if (shape.Position.X < 0.01f && shape.Direction.X < 0.0f) {
+            if (shape.Position.X < 0.024f && shape.Direction.X < 0.0f) {
+
                 return;
             }
             shape.Move(shape.Direction);

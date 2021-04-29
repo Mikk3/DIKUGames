@@ -46,7 +46,7 @@ namespace Breakout {
             );
 
             // Level creation
-            leveldata = new LevelData("level1");
+            leveldata = new LevelData("level3");
 
             // Setup player
             player = new Player(
@@ -69,14 +69,10 @@ namespace Breakout {
             if (action == KeyboardAction.KeyPress && key == KeyboardKey.D) {
                 leveldata.Blocks.Iterate(x => {
                     x.OnHit();
-                    if (x.Health < 1)
-                    {
-                        x.OnDestroy();
-                    }
                 });
             }
 
-            
+
         }
 
         public override void Render() {
@@ -88,7 +84,7 @@ namespace Breakout {
 
         public override void Update() {
             eventBus.ProcessEvents();
-            player.Move();            
+            player.Move();
         }
 
         public void ProcessEvent(GameEvent gameEvent) {

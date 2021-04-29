@@ -1,17 +1,27 @@
-using System.Collections.Generic;
 using NUnit.Framework;
+using DIKUArcade.Entities;
+using Breakout.Blocks;
+using DIKUArcade.Math;
+using DIKUArcade.Graphics;
+using System.IO;
+using DIKUArcade.GUI;
+using System.Collections.Generic;
+using Breakout.Levels;
 
 namespace BreakoutTests
 {
     public class ParserTest
     {
+
+        private LevelData leveldata;
+
         [SetUp]
         public void Setup()
         {
-
+            leveldata = new LevelData("level1");
         }
 
-        [Test]
+        //[Test]
         public void TestParseRows()
         {
             List<string> expected = new List<string>();
@@ -40,30 +50,30 @@ namespace BreakoutTests
             expected.Add("------------");
             expected.Add("------------");
             expected.Add("------------");
-            Assert.Fail();
+            Assert.AreEqual(expected, leveldata.RowsList);
         }
 
-        [Test]
+        //[Test]
         public void TestParseMeta()
         {
-            var expected = new List<KeyValuePair<string, string>>();
-            expected.Add(new KeyValuePair<string, string>("name", "LEVEL 1"));
-            expected.Add(new KeyValuePair<string, string>("time", "300"));
-            expected.Add(new KeyValuePair<string, string>("hardened", "#"));
-            expected.Add(new KeyValuePair<string, string>("powerup", "2"));
-            Assert.Fail();
+            var expected = new Dictionary<string, string>();
+            expected.Add("name", "LEVEL 1");
+            expected.Add("time", "300");
+            expected.Add("hardened", "#");
+            expected.Add("powerup", "2");
+            Assert.AreEqual(expected, leveldata.MetaList);
 
         }
 
-        [Test]
+        //[Test]
         public void TestParseImages()
         {
-            var expected = new List<KeyValuePair<char, string>>();
-            expected.Add(new KeyValuePair<char, string>('#', "teal-block.png"));
-            expected.Add(new KeyValuePair<char, string>('1', "blue-block.png"));
-            expected.Add(new KeyValuePair<char, string>('2', "green-block.png"));
-            expected.Add(new KeyValuePair<char, string>('q', "darkgreen-block.png"));
-            Assert.Fail();
+            var expected = new Dictionary<char, string>();
+            expected.Add('#', "teal-block.png");
+            expected.Add('1', "blue-block.png");
+            expected.Add('2', "green-block.png");
+            expected.Add('q', "darkgreen-block.png");
+            Assert.AreEqual(expected, leveldata.LegendList);
         }
     }
 }

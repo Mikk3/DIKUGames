@@ -20,7 +20,7 @@ namespace BreakoutTests
 
             block = new NormalBlock(
                 new DynamicShape(new Vec2F(0.50f, 0.035f), new Vec2F(0.224f, 0.044f)),
-                new Image(Path.Combine("..", "Assets", "Images", "grey-block.png"))
+                new Image(Path.Combine("Assets", "Images", "grey-block.png"))
             );
         }
 
@@ -40,11 +40,10 @@ namespace BreakoutTests
         [Test]
         public void TestBlockIsDestroyed()
         {
-            // x extend: 0,0833333333333333
-            // y extend: 0,0416666666666667
-
-
-            Assert.Fail();
+            for (int i = 0; i < 5; i++) {
+                block.OnHit();
+            }
+            Assert.IsTrue(block.IsDeleted());
         }
     }
 }

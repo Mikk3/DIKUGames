@@ -12,8 +12,10 @@ namespace Breakout.Levels {
         }
 
         public Dictionary<string, string> Parse() {
+
             var start = data.FindIndex(x => x == "Meta:") + 1;
             var end = data.FindIndex(x => x == "Meta/");
+
 
             var meta = data.GetRange(start, end - start);
             var result = new Dictionary<string, string> ();

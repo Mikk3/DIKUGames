@@ -11,11 +11,16 @@ namespace Breakout.Levels
 
     public class Generator {
 
+        // public static Dictionary<string, string> metaList {get; private set;}
+        // public static Dictionary<char, string> legendList {get; private set;}
+
         public static EntityContainer<Block> GenerateBlocksContainer(
             List<string> rows,
             Dictionary<string, string> meta,
             Dictionary<char, string> images)
             {
+            // Generator.metaList = meta;
+            // Generator.legendList = images;
 
             rows.Reverse();
 
@@ -85,24 +90,6 @@ namespace Breakout.Levels
             }
 
             return Entities;
-
-
-
-            // foreach (string row in rows) {
-            //     foreach (char x in row) {
-            //         switch (x) {
-            //             case "-":
-            //                 continue;
-            //             case ""
-
-            //             default:
-            //                 break;
-            //         }
-            //     }
-            // }
-
-            // Entities.AddEntity();
-
         }
 
         private static Vec2F calculateBlockSize(List<string> data) {

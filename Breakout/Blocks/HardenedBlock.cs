@@ -14,6 +14,9 @@ namespace Breakout.Blocks {
         public override void OnHit()
         {
             base.Health--;
+            if (base.Health <= 0) {
+                OnDestroy();
+            }
         }
 
         public override void OnDestroy()

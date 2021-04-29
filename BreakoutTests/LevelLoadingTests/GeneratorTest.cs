@@ -1,26 +1,29 @@
 using NUnit.Framework;
 using DIKUArcade.Entities;
+using Breakout.Blocks;
+using DIKUArcade.Math;
+using DIKUArcade.Graphics;
+using System.IO;
+using DIKUArcade.GUI;
+using System;
+using Breakout.Levels;
 
 namespace BreakoutTests
 {
     public class GeneratorTest
     {
+        private LevelData leveldata;
+
         [SetUp]
         public void Setup()
         {
-
+            //leveldata = new LevelData("level1");
         }
 
         [Test]
-        public void TestGenerateEntityList()
+        public void TestEntityContainerExists()
         {
-            // x extend: 0,0833333333333333
-            // y extend: 0,0416666666666667
-
-
-            Assert.Fail();
+            System.Console.WriteLine(leveldata.Blocks.CountEntities());
         }
-
-
     }
 }

@@ -16,12 +16,10 @@ namespace Breakout.Levels
             this.levelName = levelName;
         }
 
-        private string getFilePath() {
-            return Path.Combine("Assets","Levels", levelName + ".txt");
-        }
-
         public List<string> GetDataAsList() {
-            return File.ReadAllLines(getFilePath()).ToList<string>();
+            var file = Path.Combine("Assets","Levels", levelName + ".txt");
+
+            return File.ReadAllLines(file).ToList<string>();
         }
 
     }

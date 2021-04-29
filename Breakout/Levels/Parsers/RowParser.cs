@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 
-namespace Breakout.Levels
-{
+namespace Breakout.Levels {
 
     public class RowParser {
 
@@ -12,10 +13,14 @@ namespace Breakout.Levels
             this.data = data;
         }
         public List<string> Parse() {
-            var start = data.FindIndex(x => x == "Map:") + 1;
-            var end = data.FindIndex(x => x == "Map/");
+            if (data.Contains("Map:") && data.Contains("Map/")) {
 
-            return data.GetRange(start, end - start);
+                var start = data.FindIndex(x => x == "Map:") + 1;
+                var end = data.FindIndex(x => x == "Map/");
+                return data.GetRange(start, end - start);
+            } else {
+                throw new InvalidDataException();
+            }
         }
     }
 }
