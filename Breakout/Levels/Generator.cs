@@ -6,21 +6,14 @@ using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using Breakout.Blocks;
 
-namespace Breakout.Levels
-{
+namespace Breakout.Levels {
 
     public class Generator {
-
-        // public static Dictionary<string, string> metaList {get; private set;}
-        // public static Dictionary<char, string> legendList {get; private set;}
 
         public static EntityContainer<Block> GenerateBlocksContainer(
             List<string> rows,
             Dictionary<string, string> meta,
-            Dictionary<char, string> images)
-            {
-            // Generator.metaList = meta;
-            // Generator.legendList = images;
+            Dictionary<char, string> images) {
 
             rows.Reverse();
 
@@ -56,10 +49,8 @@ namespace Breakout.Levels
 
             var blockSize = calculateBlockSize(rows);
 
-            for (int y = 0; y < rows.Count - 1; y++)
-            {
-                for (int x = 0; x < rows[y].Length; x++)
-                {
+            for (int y = 0; y < rows.Count - 1; y++) {
+                for (int x = 0; x < rows[y].Length; x++) {
                     var position = calculatePosition(x, y, blockSize);
                     var symbol = rows[y][x];
 
@@ -78,8 +69,7 @@ namespace Breakout.Levels
                             new DynamicShape(position, blockSize),
                             new Image(Path.Combine("Assets", "Images", images[symbol])
                         )));
-                    } else if (symbol != '-')
-                    {
+                    } else if (symbol != '-') {
                         Entities.AddEntity(new NormalBlock(
                             new DynamicShape(position, blockSize),
                             new Image(Path.Combine("Assets", "Images", images[symbol]))

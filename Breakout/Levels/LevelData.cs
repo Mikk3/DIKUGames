@@ -12,9 +12,9 @@ namespace Breakout.Levels {
 
         public EntityContainer<Block> Blocks;
 
-        public Dictionary<string, string> MetaList {get; private set;}
-        public Dictionary<char, string> LegendList {get; private set;}
-        public List<string> RowsList {get; private set;}
+        public Dictionary<string, string> MetaList { get; private set; }
+        public Dictionary<char, string> LegendList { get; private set; }
+        public List<string> RowsList { get; private set; }
 
         public LevelData(string level) {
             this.level = level;

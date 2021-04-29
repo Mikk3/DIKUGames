@@ -59,7 +59,7 @@ namespace BreakoutTests {
         }
 
         [Test]
-         public void TestPlayerMoveRight() {
+        public void TestPlayerMoveRight() {
             var playerOldPosition = player.Shape.Position;
 
             player.SetMoveRight(true);

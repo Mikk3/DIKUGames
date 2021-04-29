@@ -3,8 +3,7 @@ using DIKUArcade.Graphics;
 
 namespace Breakout.Blocks {
 
-    public class PowerUpBlock : Block
-    {
+    public class PowerUpBlock : Block {
 
         public PowerUpBlock(DynamicShape shape, IBaseImage image) : base(shape, image) {
             base.Health = 2;
@@ -12,16 +11,14 @@ namespace Breakout.Blocks {
 
         }
 
-        public override void OnHit()
-        {
+        public override void OnHit() {
             base.Health--;
             if (base.Health <= 0) {
                 OnDestroy();
             }
         }
 
-        public override void OnDestroy()
-        {
+        public override void OnDestroy() {
             // Create Powerup
             // Change player score using event?
 

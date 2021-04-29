@@ -5,8 +5,7 @@ using System.IO;
 using System.IO.Enumeration;
 using System.Linq;
 
-namespace Breakout.Levels
-{
+namespace Breakout.Levels {
 
     public class Provider {
 
@@ -17,7 +16,7 @@ namespace Breakout.Levels
         }
 
         public List<string> GetDataAsList() {
-            var file = Path.Combine("Assets","Levels", levelName + ".txt");
+            var file = Path.Combine("Assets", "Levels", levelName + ".txt");
 
             return File.ReadAllLines(file).ToList<string>();
         }

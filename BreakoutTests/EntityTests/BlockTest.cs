@@ -6,16 +6,13 @@ using DIKUArcade.Graphics;
 using System.IO;
 using DIKUArcade.GUI;
 
-namespace BreakoutTests
-{
-    public class BlockTest
-    {
+namespace BreakoutTests {
+    public class BlockTest {
 
         public Block block;
 
         [SetUp]
-        public void Setup()
-        {
+        public void Setup() {
             Window.CreateOpenGLContext();
 
             block = new NormalBlock(
@@ -30,16 +27,14 @@ namespace BreakoutTests
         }
 
         [Test]
-        public void TestDamageTaken()
-        {
+        public void TestDamageTaken() {
             var oldHealth = block.Health;
             block.OnHit();
             Assert.AreEqual(block.Health, oldHealth - 1);
         }
 
         [Test]
-        public void TestBlockIsDestroyed()
-        {
+        public void TestBlockIsDestroyed() {
             for (int i = 0; i < 5; i++) {
                 block.OnHit();
             }

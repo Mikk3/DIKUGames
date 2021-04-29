@@ -9,35 +9,29 @@ using Breakout.Levels;
 using System.Collections.Generic;
 using System;
 
-namespace BreakoutTests
-{
-    public class ProviderTest
-    {
+namespace BreakoutTests {
+    public class ProviderTest {
         List<string> data;
 
         [SetUp]
-        public void Setup()
-        {
+        public void Setup() {
             data = new Provider("level1").GetDataAsList();
         }
 
         [Test]
-        public void TestOpenNonEmptyFile()
-        {
+        public void TestOpenNonEmptyFile() {
             Assert.Pass();
 
         }
 
         //[Test]
-        public void TestOpenEmptyFile()
-        {
+        public void TestOpenEmptyFile() {
             Assert.Pass();
 
         }
 
         //[Test]
-        public void TestOpenInvalidFile()
-        {
+        public void TestOpenInvalidFile() {
             Assert.Pass();
 
         }

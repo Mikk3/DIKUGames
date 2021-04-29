@@ -17,13 +17,9 @@ namespace Breakout {
     class Game : DIKUGame, IGameEventProcessor {
 
         private GameEventBus eventBus;
-
         private Entity backgroundImage;
-
         private EntityContainer<Block> blocks;
-
         private LevelData leveldata;
-
         private Player player;
 
 
@@ -66,12 +62,12 @@ namespace Breakout {
                 eventBus.RegisterEvent(closeEvent);
             }
 
+            // Temporary implementation to damage block on 'D' key press
             if (action == KeyboardAction.KeyPress && key == KeyboardKey.D) {
                 leveldata.Blocks.Iterate(x => {
                     x.OnHit();
                 });
             }
-
 
         }
 

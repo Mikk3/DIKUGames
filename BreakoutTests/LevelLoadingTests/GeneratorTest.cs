@@ -8,21 +8,17 @@ using DIKUArcade.GUI;
 using System;
 using Breakout.Levels;
 
-namespace BreakoutTests
-{
-    public class GeneratorTest
-    {
+namespace BreakoutTests {
+    public class GeneratorTest {
         private LevelData leveldata;
 
         [SetUp]
-        public void Setup()
-        {
+        public void Setup() {
             //leveldata = new LevelData("level1");
         }
 
         [Test]
-        public void TestEntityContainerExists()
-        {
+        public void TestEntityContainerExists() {
             System.Console.WriteLine(leveldata.Blocks.CountEntities());
         }
     }

@@ -8,22 +8,18 @@ using DIKUArcade.GUI;
 using System.Collections.Generic;
 using Breakout.Levels;
 
-namespace BreakoutTests
-{
-    public class ParserTest
-    {
+namespace BreakoutTests {
+    public class ParserTest {
 
         private LevelData leveldata;
 
         [SetUp]
-        public void Setup()
-        {
+        public void Setup() {
             leveldata = new LevelData("level1");
         }
 
         //[Test]
-        public void TestParseRows()
-        {
+        public void TestParseRows() {
             List<string> expected = new List<string>();
             expected.Add("------------");
             expected.Add("------------");
@@ -54,8 +50,7 @@ namespace BreakoutTests
         }
 
         //[Test]
-        public void TestParseMeta()
-        {
+        public void TestParseMeta() {
             var expected = new Dictionary<string, string>();
             expected.Add("name", "LEVEL 1");
             expected.Add("time", "300");
@@ -66,8 +61,7 @@ namespace BreakoutTests
         }
 
         //[Test]
-        public void TestParseImages()
-        {
+        public void TestParseImages() {
             var expected = new Dictionary<char, string>();
             expected.Add('#', "teal-block.png");
             expected.Add('1', "blue-block.png");
