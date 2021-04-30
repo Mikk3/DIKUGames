@@ -15,24 +15,23 @@ namespace BreakoutTests {
 
         [SetUp]
         public void Setup() {
-            data = new Provider("level1").GetDataAsList();
+            Window.CreateOpenGLContext();
         }
 
         [Test]
         public void TestOpenNonEmptyFile() {
-            Assert.Pass();
-
+            Assert.That(() => new LevelData("level1"), Throws.Nothing);
         }
 
-        //[Test]
+        [Test]
         public void TestOpenEmptyFile() {
-            Assert.Pass();
+            Assert.That(() => new LevelData("fileThatDoNotExist"), Throws.Nothing);
 
         }
 
-        //[Test]
+        [Test]
         public void TestOpenInvalidFile() {
-            Assert.Pass();
+            Assert.That(() => new LevelData("test-emptyfile"), Throws.Nothing);
 
         }
     }

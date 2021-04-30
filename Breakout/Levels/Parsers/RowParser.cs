@@ -17,6 +17,7 @@ namespace Breakout.Levels {
 
                 var start = data.FindIndex(x => x == "Map:") + 1;
                 var end = data.FindIndex(x => x == "Map/");
+
                 return data.GetRange(start, end - start);
             } else {
                 throw new InvalidDataException();

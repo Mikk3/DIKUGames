@@ -14,12 +14,23 @@ namespace BreakoutTests {
 
         [SetUp]
         public void Setup() {
-            //leveldata = new LevelData("level1");
+            Window.CreateOpenGLContext();
         }
 
         [Test]
         public void TestEntityContainerExists() {
-            System.Console.WriteLine(leveldata.Blocks.CountEntities());
+            leveldata = new LevelData("level1");
+            Assert.That(leveldata.Blocks, Is.InstanceOf<EntityContainer<Block>>());
+        }
+
+        [Test]
+        public void TestHandleMetaDifferences() {
+            Assert.That(new LevelData("level1"), Is.InstanceOf<LevelData>());
+            Assert.That(new LevelData("level2"), Is.InstanceOf<LevelData>());
+            Assert.That(new LevelData("level3"), Is.InstanceOf<LevelData>());
+            Assert.That(new LevelData("central-mass"), Is.InstanceOf<LevelData>());
+            Assert.That(new LevelData("columns"), Is.InstanceOf<LevelData>());
+            Assert.That(new LevelData("wall"), Is.InstanceOf<LevelData>());
         }
     }
 }

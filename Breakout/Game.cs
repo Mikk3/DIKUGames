@@ -42,7 +42,11 @@ namespace Breakout {
             );
 
             // Level creation
-            leveldata = new LevelData("level3");
+            // Random until level selection is implemented
+            List<string> levels = new List<string>() {"level1", "level2", "level3", "central-mass", "columns", "wall"};
+            var rnd = new Random().Next(levels.Count - 1);
+            System.Console.WriteLine("Loaded: " + levels[rnd] + ".txt");
+            leveldata = new LevelData(levels[rnd]);
 
             // Setup player
             player = new Player(

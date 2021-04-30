@@ -15,52 +15,51 @@ namespace BreakoutTests {
 
         [SetUp]
         public void Setup() {
+            Window.CreateOpenGLContext();
             leveldata = new LevelData("level1");
         }
 
-        //[Test]
+        [Test]
         public void TestParseRows() {
             List<string> expected = new List<string>();
             expected.Add("------------");
             expected.Add("------------");
-            expected.Add("-qqqqqqqqqq-");
-            expected.Add("-qqqqqqqqqq-");
+            expected.Add("------------");
+            expected.Add("------------");
+            expected.Add("------------");
+            expected.Add("------------");
+            expected.Add("------------");
+            expected.Add("------------");
+            expected.Add("------------");
+            expected.Add("------------");
+            expected.Add("------------");
+            expected.Add("------------");
+            expected.Add("------------");
+            expected.Add("-##########-");
+            expected.Add("-##########-");
             expected.Add("-111----111-");
             expected.Add("-111-##-111-");
             expected.Add("-111-22-111-");
             expected.Add("-111-##-111-");
             expected.Add("-111----111-");
-            expected.Add("-##########-");
-            expected.Add("-##########-");
-            expected.Add("------------");
-            expected.Add("------------");
-            expected.Add("------------");
-            expected.Add("------------");
-            expected.Add("------------");
-            expected.Add("------------");
-            expected.Add("------------");
-            expected.Add("------------");
-            expected.Add("------------");
-            expected.Add("------------");
-            expected.Add("------------");
-            expected.Add("------------");
+            expected.Add("-qqqqqqqqqq-");
+            expected.Add("-qqqqqqqqqq-");
             expected.Add("------------");
             expected.Add("------------");
             Assert.AreEqual(expected, leveldata.RowsList);
         }
 
-        //[Test]
+        [Test]
         public void TestParseMeta() {
             var expected = new Dictionary<string, string>();
-            expected.Add("name", "LEVEL 1");
-            expected.Add("time", "300");
-            expected.Add("hardened", "#");
-            expected.Add("powerup", "2");
+            expected.Add("Name", "LEVEL 1");
+            expected.Add("Time", "300");
+            expected.Add("Hardened", "#");
+            expected.Add("PowerUp", "2");
             Assert.AreEqual(expected, leveldata.MetaList);
-
         }
 
-        //[Test]
+        [Test]
         public void TestParseImages() {
             var expected = new Dictionary<char, string>();
             expected.Add('#', "teal-block.png");

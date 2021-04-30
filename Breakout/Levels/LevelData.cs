@@ -32,17 +32,12 @@ namespace Breakout.Levels {
                 LegendList = new LegendParser(data).Parse();
 
                 Blocks = Generator.GenerateBlocksContainer(RowsList, MetaList, LegendList);
-            } catch (Exception ex) {
-
-                if (ex is FileNotFoundException) {
+            } catch (FileNotFoundException) {
                     System.Console.WriteLine("File does not exist.");
                     loadDefaultLevel();
-                }
-
-                if (ex is InvalidDataException) {
+            } catch (InvalidDataException) {
                     System.Console.WriteLine("Invalid level data.");
                     loadDefaultLevel();
-                }
             }
 
         }
