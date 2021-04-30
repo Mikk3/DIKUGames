@@ -18,19 +18,16 @@ namespace Breakout.Levels {
         public List<string> GetDataAsList() {
             //////////////////
             // Copied from DIKUArcade Texture.cs - testing would not function properly without this block of code
-             var dir = new DirectoryInfo(Path.GetDirectoryName(
-                System.Reflection.Assembly.GetExecutingAssembly().Location));
+            var dir = new DirectoryInfo(Path.GetDirectoryName(
+               System.Reflection.Assembly.GetExecutingAssembly().Location));
 
-            while (dir.Name != "bin")
-            {
+            while (dir.Name != "bin") {
                 dir = dir.Parent;
             }
             dir = dir.Parent;
 
-            // load image file
             var path = Path.Combine(dir.FullName.ToString(), "Assets", "Levels", levelName + ".txt");
-            if (!File.Exists(path))
-            {
+            if (!File.Exists(path)) {
                 throw new FileNotFoundException($"Error: The file \"{path}\" does not exist.");
             }
             //////////////////
