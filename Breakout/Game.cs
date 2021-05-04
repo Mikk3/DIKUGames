@@ -11,80 +11,46 @@ using System;
 using Breakout.Levels;
 using Breakout.Paddle;
 using Breakout.Blocks;
+using Breakout.States;
 
 namespace Breakout {
 
     class Game : DIKUGame, IGameEventProcessor {
 
         private GameEventBus eventBus;
-        private Entity backgroundImage;
-        private EntityContainer<Block> blocks;
-        private LevelData leveldata;
-        private Player player;
 
+        private StateMachine stateMachine;
 
         public Game(WindowArgs windowArgs) : base(windowArgs) {
             // KeyHandler
             window.SetKeyEventHandler(KeyHandler);
 
+            // State Machine
+            stateMachine = new StateMachine();
+
             // Events
-            eventBus = new GameEventBus();
+            eventBus = BreakoutBus.GetBus();
             eventBus.InitializeEventBus(new List<GameEventType> {
                 GameEventType.WindowEvent,
                 GameEventType.GameStateEvent
             });
+            eventBus.Subscribe(GameEventType.GameStateEvent, stateMachine);
             eventBus.Subscribe(GameEventType.WindowEvent, this);
-
-            // Background
-            backgroundImage = new Entity(
-                new StationaryShape(new Vec2F(0f, 0f), new Vec2F(1f, 1f)),
-                new Image(Path.Combine("Assets", "Images", "SpaceBackground.png"))
-            );
-
-            // Level creation
-            // Random until level selection is implemented
-            List<string> levels = new List<string>() {"level1", "level2", "level3", "central-mass", "columns", "wall"};
-            var rnd = new Random().Next(levels.Count - 1);
-            System.Console.WriteLine("Loaded: " + levels[rnd] + ".txt");
-            leveldata = new LevelData(levels[rnd]);
-
-            // Setup player
-            player = new Player(
-                new DynamicShape(new Vec2F(0.50f, 0.035f), new Vec2F(0.224f, 0.044f)),
-                new Image(Path.Combine("Assets", "Images", "player.png"))
-            );
 
         }
 
         private void KeyHandler(KeyboardAction action, KeyboardKey key) {
-            player.HandleMovement(action, key);
-
-            if (action == KeyboardAction.KeyPress && key == KeyboardKey.Escape) {
-                var closeEvent = new GameEvent();
-                closeEvent.EventType = GameEventType.WindowEvent;
-                closeEvent.Message = "CLOSE_WINDOW";
-                eventBus.RegisterEvent(closeEvent);
-            }
-
-            // Temporary implementation to damage block on 'D' key press
-            if (action == KeyboardAction.KeyPress && key == KeyboardKey.D) {
-                leveldata.Blocks.Iterate(x => {
-                    x.OnHit();
-                });
-            }
+            stateMachine.ActiveState.HandleKeyEvent(action, key);
 
         }
 
         public override void Render() {
-            backgroundImage.RenderEntity();
-            leveldata.Blocks.RenderEntities();
-            player.RenderEntity();
-
+            stateMachine.ActiveState.RenderState();
         }
 
         public override void Update() {
             eventBus.ProcessEvents();
-            player.Move();
+            stateMachine.ActiveState.UpdateState();
         }
 
         public void ProcessEvent(GameEvent gameEvent) {
@@ -92,6 +58,7 @@ namespace Breakout {
                 window.CloseWindow();
             }
         }
+
     }
 
 }

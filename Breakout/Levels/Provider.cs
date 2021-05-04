@@ -26,7 +26,7 @@ namespace Breakout.Levels {
             }
             dir = dir.Parent;
 
-            var path = Path.Combine(dir.FullName.ToString(), "Assets", "Levels", levelName + ".txt");
+            var path = Path.Combine(dir.FullName.ToString(), "Assets", "Levels", levelName);
             if (!File.Exists(path)) {
                 throw new FileNotFoundException($"Error: The file \"{path}\" does not exist.");
             }
