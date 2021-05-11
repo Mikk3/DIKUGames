@@ -10,6 +10,8 @@ using DIKUArcade.Graphics;
 using DIKUArcade.Input;
 using DIKUArcade.Math;
 using DIKUArcade.State;
+using Breakout.Ball;
+using Breakout;
 
 namespace Breakout.States {
     public class GameRunning : IGameState {
@@ -19,6 +21,7 @@ namespace Breakout.States {
         private Entity backgroundImage;
         private LevelData leveldata;
         private Player player;
+        private Ball.Ball ball;
 
         public static GameRunning GetInstance() {
             return instance ?? (instance = new GameRunning());
@@ -44,6 +47,18 @@ namespace Breakout.States {
                 new DynamicShape(new Vec2F(0.50f, 0.035f), new Vec2F(0.224f, 0.044f)),
                 new Image(Path.Combine("Assets", "Images", "player.png"))
             );
+
+            // Ball
+            /*ball = new Ball.Ball(
+                new DynamicShape(new Vec2F(0.324f, 0.044f), new Vec2F(0.045f, 0.045f)),
+                new Image(Path.Combine("Assets", "Images", "ball.png"))
+            );*/
+
+            ball = new Ball.Ball(
+                new DynamicShape(new Vec2F(0.324f, 0.044f), new Vec2F(0.070f, 0.070f)),
+                new Image(Path.Combine("Assets", "Images", "orange-block.png"))
+            );
+
         }
 
 
@@ -68,12 +83,14 @@ namespace Breakout.States {
             if (action == KeyboardAction.KeyPress && key == KeyboardKey.L) {
                 leveldata.NextLevel();
             }
+
         }
 
         public void RenderState() {
             backgroundImage.RenderEntity();
-            player.RenderEntity();
             leveldata.Blocks.RenderEntities();
+            ball.RenderEntity();
+            player.RenderEntity();
         }
 
         public void ResetState() {
@@ -82,6 +99,9 @@ namespace Breakout.States {
 
         public void UpdateState() {
             player.Move();
+            ball.Move();
+            Collisions.CheckBallCollisionWithPlayer(ball, player);
+            Collisions.CheckBallCollisionsWithBlock(ball, leveldata.Blocks);
         }
 
     }

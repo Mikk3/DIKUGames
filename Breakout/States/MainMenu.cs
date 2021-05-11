@@ -18,15 +18,7 @@ namespace Breakout.States
 
 
         public MainMenu() {
-            InitializeGameState();
-        }
-
-        public static MainMenu GetInstance() {
-            return MainMenu.instance ?? (MainMenu.instance = new MainMenu());
-        }
-
-        public void InitializeGameState() {
-                backgroundImage = new Entity(
+            backgroundImage = new Entity(
                 new StationaryShape(new Vec2F(0f, 0f), new Vec2F(1f, 1f)),
                 new Image(Path.Combine("Assets", "Images", "shipit_titlescreen.png"))
             );
@@ -40,9 +32,12 @@ namespace Breakout.States
             menuButtons[1].SetColor(new Vec3I(255, 255, 255));
 
             activeMenuButton = 0;
-
-            // 229, 192, 20
         }
+
+        public static MainMenu GetInstance() {
+            return MainMenu.instance ?? (MainMenu.instance = new MainMenu());
+        }
+
         public void HandleKeyEvent(KeyboardAction action, KeyboardKey key) {
             if (action == KeyboardAction.KeyPress) {
                 switch (key) {
