@@ -1,5 +1,7 @@
 using DIKUArcade.Entities;
+using DIKUArcade.Events;
 using DIKUArcade.Graphics;
+using DIKUArcade.Math;
 
 namespace Breakout.Blocks {
 
@@ -7,7 +9,7 @@ namespace Breakout.Blocks {
         public int Health { get; internal set; }
         public int Value { get; internal set; }
 
-        public Block(DynamicShape shape, IBaseImage image) : base(shape, image) {
+        public Block(Shape shape, IBaseImage image) : base(shape, image) {
 
         }
 

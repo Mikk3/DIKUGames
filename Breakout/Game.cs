@@ -32,11 +32,11 @@ namespace Breakout {
             eventBus = BreakoutBus.GetBus();
             eventBus.InitializeEventBus(new List<GameEventType> {
                 GameEventType.WindowEvent,
-                GameEventType.GameStateEvent
+                GameEventType.GameStateEvent,
+                GameEventType.ControlEvent
             });
             eventBus.Subscribe(GameEventType.GameStateEvent, stateMachine);
             eventBus.Subscribe(GameEventType.WindowEvent, this);
-
         }
 
         private void KeyHandler(KeyboardAction action, KeyboardKey key) {

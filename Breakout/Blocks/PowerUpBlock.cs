@@ -1,4 +1,5 @@
 using DIKUArcade.Entities;
+using DIKUArcade.Events;
 using DIKUArcade.Graphics;
 
 namespace Breakout.Blocks {
@@ -21,6 +22,11 @@ namespace Breakout.Blocks {
         public override void OnDestroy() {
             // Create Powerup
             // Change player score using event?
+            var gameEvent = new GameEvent();
+            gameEvent.EventType = GameEventType.ControlEvent;
+            gameEvent.Message = "ADD_SCORE";
+            gameEvent.IntArg1 = Value;
+            BreakoutBus.GetBus().RegisterEvent(gameEvent);
 
             this.DeleteEntity();
         }

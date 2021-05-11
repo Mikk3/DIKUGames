@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Enumeration;
 using System.Linq;
+using DIKUArcade.Utilities;
 
 namespace Breakout.Levels {
 
@@ -16,22 +17,7 @@ namespace Breakout.Levels {
         }
 
         public List<string> GetDataAsList() {
-            //////////////////
-            // Copied from DIKUArcade Texture.cs - testing would not function properly without this block of code
-            var dir = new DirectoryInfo(Path.GetDirectoryName(
-               System.Reflection.Assembly.GetExecutingAssembly().Location));
-
-            while (dir.Name != "bin") {
-                dir = dir.Parent;
-            }
-            dir = dir.Parent;
-
-            var path = Path.Combine(dir.FullName.ToString(), "Assets", "Levels", levelName);
-            if (!File.Exists(path)) {
-                throw new FileNotFoundException($"Error: The file \"{path}\" does not exist.");
-            }
-            //////////////////
-
+            var path = Path.Combine(FileIO.GetProjectPath(), "Assets", "Levels", levelName);
             return File.ReadAllLines(path).ToList<string>();
         }
 

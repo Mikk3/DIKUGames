@@ -16,7 +16,9 @@ namespace BreakoutTests {
         [SetUp]
         public void Setup() {
             Window.CreateOpenGLContext();
-            leveldata = new LevelData("level1");
+            leveldata = new LevelData();
+            leveldata.NextLevel();
+            leveldata.NextLevel();
         }
 
         [Test]
@@ -35,8 +37,8 @@ namespace BreakoutTests {
             expected.Add("------------");
             expected.Add("------------");
             expected.Add("------------");
-            expected.Add("-##########-");
-            expected.Add("-##########-");
+            expected.Add("-qqqqqqqqqq-");
+            expected.Add("-qqqqqqqqqq-");
             expected.Add("-111----111-");
             expected.Add("-111-##-111-");
             expected.Add("-111-22-111-");
@@ -54,7 +56,6 @@ namespace BreakoutTests {
             var expected = new Dictionary<string, string>();
             expected.Add("Name", "LEVEL 1");
             expected.Add("Time", "300");
-            expected.Add("Hardened", "#");
             expected.Add("PowerUp", "2");
             Assert.AreEqual(expected, leveldata.MetaList);
         }

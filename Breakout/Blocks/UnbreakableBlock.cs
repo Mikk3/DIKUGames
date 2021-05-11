@@ -1,4 +1,5 @@
 using DIKUArcade.Entities;
+
 using DIKUArcade.Graphics;
 
 namespace Breakout.Blocks {

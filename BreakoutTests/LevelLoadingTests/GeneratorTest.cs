@@ -19,19 +19,25 @@ namespace BreakoutTests {
 
         [Test]
         public void TestEntityContainerExists() {
-            leveldata = new LevelData("level1");
+            leveldata = new LevelData();
             Assert.That(leveldata.Blocks, Is.InstanceOf<EntityContainer<Block>>());
         }
 
         [Test]
         public void TestHandleMetaDifferences() {
+            leveldata = new LevelData();
 
-            Assert.That(new LevelData("level1"), Is.InstanceOf<LevelData>());
-            Assert.That(new LevelData("level2"), Is.InstanceOf<LevelData>());
-            Assert.That(new LevelData("level3"), Is.InstanceOf<LevelData>());
-            Assert.That(new LevelData("central-mass"), Is.InstanceOf<LevelData>());
-            Assert.That(new LevelData("columns"), Is.InstanceOf<LevelData>());
-            Assert.That(new LevelData("wall"), Is.InstanceOf<LevelData>());
+            Assert.That(leveldata, Is.InstanceOf<LevelData>());
+            leveldata.NextLevel();
+            Assert.That(leveldata, Is.InstanceOf<LevelData>());
+            leveldata.NextLevel();
+            Assert.That(leveldata, Is.InstanceOf<LevelData>());
+            leveldata.NextLevel();
+            Assert.That(leveldata, Is.InstanceOf<LevelData>());
+            leveldata.NextLevel();
+            Assert.That(leveldata, Is.InstanceOf<LevelData>());
+
+            Assert.That(leveldata, Is.InstanceOf<LevelData>());
         }
     }
 }

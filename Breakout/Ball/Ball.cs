@@ -11,17 +11,18 @@ using System;
 using Breakout.Levels;
 using Breakout.Paddle;
 using Breakout.Blocks;
+using DIKUArcade.Physics;
 
 namespace Breakout.Ball {
     public class Ball : Entity {
 
-        private DynamicShape shape;
+        public DynamicShape shape;
         private bool isActive = false;
 
         private Vec2F speed;
 
         public Ball(DynamicShape shape, IBaseImage image) : base(shape, image) {
-            this.shape = Shape.AsDynamicShape();
+            this.shape = shape;
             speed = new Vec2F(0.015f, 0.015f);
             shape.Direction = speed;
         }
@@ -39,12 +40,25 @@ namespace Breakout.Ball {
         }
 
         public void CollideWithPlayer(Player player) {
-            ChangeDirection(new Vec2F(speed.X, speed.Y * (-1)));
+            ChangeDirection(new Vec2F(speed.X * (-1), speed.Y * (-1)));
         }
 
 
-        public void CollideWithBlock(Block block) {
-            ChangeDirection(new Vec2F(speed.X, speed.Y * (-1)));
+        public void CollideWithBlock(Block block, CollisionDirection dir) {
+            switch (dir) {
+                case (CollisionDirection.CollisionDirDown) :
+                    ChangeDirection(new Vec2F(speed.Y * (-1), speed.X));
+                    break;
+                case (CollisionDirection.CollisionDirUp) :
+                    ChangeDirection(new Vec2F(speed.Y * (-1), speed.X));
+                    break;
+                case (CollisionDirection.CollisionDirLeft) :
+                    ChangeDirection(new Vec2F(speed.Y, speed.X) * (-1));
+                    break;
+                case (CollisionDirection.CollisionDirRight) :
+                    ChangeDirection(new Vec2F(speed.Y, speed.X) * (-1));
+                    break;
+            }
         }
 
 

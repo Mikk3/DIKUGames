@@ -11,6 +11,7 @@ using DIKUArcade.Input;
 using DIKUArcade.Math;
 using DIKUArcade.State;
 using Breakout.Ball;
+using Breakout.Score;
 using Breakout;
 
 namespace Breakout.States {
@@ -22,6 +23,7 @@ namespace Breakout.States {
         private LevelData leveldata;
         private Player player;
         private Ball.Ball ball;
+        private Score.Score score;
 
         public static GameRunning GetInstance() {
             return instance ?? (instance = new GameRunning());
@@ -41,6 +43,10 @@ namespace Breakout.States {
             // Level creation
             leveldata = new LevelData();
 
+            // Score
+            score = new Score.Score(new Vec2F(0.0f, 0.5f), new Vec2F(0.5f, 0.5f));
+            BreakoutBus.GetBus().Subscribe(GameEventType.ControlEvent, score);
+
 
             //Player
             player = new Player(
@@ -49,14 +55,9 @@ namespace Breakout.States {
             );
 
             // Ball
-            /*ball = new Ball.Ball(
-                new DynamicShape(new Vec2F(0.324f, 0.044f), new Vec2F(0.045f, 0.045f)),
-                new Image(Path.Combine("Assets", "Images", "ball.png"))
-            );*/
-
             ball = new Ball.Ball(
-                new DynamicShape(new Vec2F(0.324f, 0.044f), new Vec2F(0.070f, 0.070f)),
-                new Image(Path.Combine("Assets", "Images", "orange-block.png"))
+                new DynamicShape(new Vec2F(0.324f, 0.044f), new Vec2F(0.022f, 0.022f)),
+                new Image(Path.Combine("Assets", "Images", "ball.png"))
             );
 
         }
@@ -91,6 +92,7 @@ namespace Breakout.States {
             leveldata.Blocks.RenderEntities();
             ball.RenderEntity();
             player.RenderEntity();
+            score.RenderScore();
         }
 
         public void ResetState() {

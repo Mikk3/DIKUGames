@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System;
 using DIKUArcade.Events;
 using Breakout.States;
+using DIKUArcade.Utilities;
 
 namespace Breakout.Levels {
 
@@ -18,13 +19,13 @@ namespace Breakout.Levels {
         public Dictionary<char, string> LegendList { get; private set; }
         public List<string> RowsList { get; private set; }
 
-        public Queue<string> LevelQueue { get; private set; }
+        private Queue<string> LevelQueue;
 
         public LevelData() {
             LevelQueue = new Queue<string>();
 
             // Load levels from Levels folder
-            DirectoryInfo di = new DirectoryInfo(Environment.CurrentDirectory + "/Assets/Levels/");
+            DirectoryInfo di = new DirectoryInfo(FileIO.GetProjectPath() + "/Assets/Levels/");
             FileInfo[] fi = di.GetFiles();
             foreach (FileInfo f in fi) {
                 LevelQueue.Enqueue(f.Name);

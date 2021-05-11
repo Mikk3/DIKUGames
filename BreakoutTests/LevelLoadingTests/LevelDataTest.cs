@@ -20,19 +20,8 @@ namespace BreakoutTests {
 
         [Test]
         public void TestOpenNonEmptyFile() {
-            Assert.That(() => new LevelData("level1"), Throws.Nothing);
+            Assert.That(() => new LevelData(), Throws.Nothing);
         }
 
-        [Test]
-        public void TestOpenEmptyFile() {
-            Assert.That(() => new LevelData("fileThatDoNotExist"), Throws.Nothing);
-
-        }
-
-        [Test]
-        public void TestOpenInvalidFile() {
-            Assert.That(() => new LevelData("test-emptyfile"), Throws.Nothing);
-
-        }
     }
 }
