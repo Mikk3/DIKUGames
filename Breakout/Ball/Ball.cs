@@ -16,47 +16,55 @@ using DIKUArcade.Physics;
 namespace Breakout.Ball {
     public class Ball : Entity {
 
-        public DynamicShape shape;
         private bool isActive = false;
 
-        private Vec2F speed;
+        public float speed;
+
+        private DynamicShape shape;
 
         public Ball(DynamicShape shape, IBaseImage image) : base(shape, image) {
-            this.shape = shape;
-            speed = new Vec2F(0.015f, 0.015f);
-            shape.Direction = speed;
+            this.shape = base.Shape.AsDynamicShape();
+            shape.Direction = new Vec2F(0.008f, 0.008f);
         }
 
         public void Move() {
-            shape.Position = shape.Position + speed;
             checkBoundary();
+            Shape.Move();
         }
 
         public void SetMoveLeft(bool val) {
         }
 
-        public void ChangeDirection(Vec2F newSpeed) {
-            speed = newSpeed;
+        public void ChangeDirection(Vec2F dir) {
+            shape.Direction = dir;
         }
 
         public void CollideWithPlayer(Player player) {
-            ChangeDirection(new Vec2F(speed.X * (-1), speed.Y * (-1)));
+            if (shape.Position.X < player.Shape.Position.X + (0.5 * player.Shape.Extent.X)) {
+
+                ChangeDirection(new Vec2F(Math.Abs(shape.Direction.X) * (-1), shape.Direction.Y * -1));
+            } else {
+                ChangeDirection(new Vec2F(Math.Abs(shape.Direction.X), shape.Direction.Y * -1));
+            }
+
+            // ChangeDirection(new Vec2F(shape.Direction.X * -1, shape.Direction.Y * -1));
         }
 
 
-        public void CollideWithBlock(Block block, CollisionDirection dir) {
-            switch (dir) {
+        public void CollideWithBlock(Block block, CollisionData data) {
+
+            switch (data.CollisionDir) {
                 case (CollisionDirection.CollisionDirDown) :
-                    ChangeDirection(new Vec2F(speed.Y * (-1), speed.X));
+                    ChangeDirection(new Vec2F(shape.Direction.X, shape.Direction.Y * (-1) ));
                     break;
                 case (CollisionDirection.CollisionDirUp) :
-                    ChangeDirection(new Vec2F(speed.Y * (-1), speed.X));
+                    ChangeDirection(new Vec2F(shape.Direction.X, shape.Direction.Y * (-1)));
                     break;
                 case (CollisionDirection.CollisionDirLeft) :
-                    ChangeDirection(new Vec2F(speed.Y, speed.X) * (-1));
+                    ChangeDirection(new Vec2F(shape.Direction.X * (-1), shape.Direction.Y));
                     break;
                 case (CollisionDirection.CollisionDirRight) :
-                    ChangeDirection(new Vec2F(speed.Y, speed.X) * (-1));
+                    ChangeDirection(new Vec2F(shape.Direction.X * (-1), shape.Direction.Y));
                     break;
             }
         }
@@ -65,19 +73,15 @@ namespace Breakout.Ball {
         private void checkBoundary() {
             // Right Boundary
             if (shape.Position.X >= 1f - shape.Extent.X) {
-                speed.X = speed.X * (-1);
+                shape.Direction.X = shape.Direction.X * (-1);
             }
             // Left boundary
             if (shape.Position.X <= 0f) {
-                speed.X = speed.X * (-1);
+                shape.Direction.X = shape.Direction.X * (-1);
             }
             // Upper Boundary
             if (shape.Position.Y >= 1f - shape.Extent.Y) {
-                speed.Y = speed.Y * (-1);
-            }
-            // Temp lower Boundary
-            if (shape.Position.Y <= 0f) {
-                speed.Y = speed.Y * (-1);
+                shape.Direction.Y = shape.Direction.Y * (-1);
             }
         }
     }

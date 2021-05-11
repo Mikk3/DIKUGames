@@ -85,6 +85,16 @@ namespace Breakout.States {
                 leveldata.NextLevel();
             }
 
+            // Temporary implementation to change level 'L' key press
+            if (action == KeyboardAction.KeyPress && key == KeyboardKey.Up) {
+                ball.speed = ball.speed + 0.05f;
+            }
+
+            // Temporary implementation to change level 'L' key press
+            if (action == KeyboardAction.KeyPress && key == KeyboardKey.Down) {
+                ball.speed = ball.speed - 0.05f;
+            }
+
         }
 
         public void RenderState() {
@@ -100,10 +110,10 @@ namespace Breakout.States {
         }
 
         public void UpdateState() {
-            player.Move();
+            Collisions.CheckBallCollisionsWithBlock(ball, leveldata.Blocks);
             ball.Move();
             Collisions.CheckBallCollisionWithPlayer(ball, player);
-            Collisions.CheckBallCollisionsWithBlock(ball, leveldata.Blocks);
+            player.Move();
         }
 
     }

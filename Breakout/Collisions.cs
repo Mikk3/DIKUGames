@@ -12,18 +12,16 @@ namespace Breakout
 
         public static void CheckBallCollisionsWithBlock(Ball.Ball ball, EntityContainer<Block> blocks) {
             blocks.Iterate(block => {
-                var data = CollisionDetection.Aabb(ball.shape, block.Shape);
+                var data = CollisionDetection.Aabb(ball.Shape.AsDynamicShape(), block.Shape.AsDynamicShape());
                 if (data.Collision) {
                     block.OnHit();
-                    ball.CollideWithBlock(block, data.CollisionDir);
-                    System.Console.WriteLine(data.CollisionDir);
-                    System.Console.WriteLine(ball.Shape.AsDynamicShape().Direction * data.DirectionFactor);
+                    ball.CollideWithBlock(block, data);
                 }
             });
         }
 
         public static void CheckBallCollisionWithPlayer(Ball.Ball ball, Player player) {
-            var data = CollisionDetection.Aabb(ball.shape, player.Shape);
+            var data = CollisionDetection.Aabb(ball.Shape.AsDynamicShape(), player.Shape);
             if (data.Collision) {
                 ball.CollideWithPlayer(player);
             }
