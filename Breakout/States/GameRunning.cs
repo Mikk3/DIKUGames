@@ -85,17 +85,7 @@ namespace Breakout.States {
                 leveldata.NextLevel();
             }
 
-            // Temporary implementation to change level 'L' key press
-            if (action == KeyboardAction.KeyPress && key == KeyboardKey.Up) {
-                ball.speed = ball.speed + 0.05f;
-            }
-
-            // Temporary implementation to change level 'L' key press
-            if (action == KeyboardAction.KeyPress && key == KeyboardKey.Down) {
-                ball.speed = ball.speed - 0.05f;
-            }
-
-            // Temporary implementation to change level 'SpaceBar' key press
+            // Launch ball when 'Space' is pressed
             if (action == KeyboardAction.KeyPress && key == KeyboardKey.Space) {
                 ball.IsActive = true;
             }
