@@ -45,13 +45,10 @@ namespace Breakout.Ball {
 
         public void CollideWithPlayer(Player player) {
             if (shape.Position.X < player.Shape.Position.X + (0.5 * player.Shape.Extent.X)) {
-
                 ChangeDirection(new Vec2F(Math.Abs(shape.Direction.X) * (-1), shape.Direction.Y * -1));
             } else {
                 ChangeDirection(new Vec2F(Math.Abs(shape.Direction.X), shape.Direction.Y * -1));
             }
-
-            // ChangeDirection(new Vec2F(shape.Direction.X * -1, shape.Direction.Y * -1));
         }
 
 
