@@ -57,7 +57,8 @@ namespace Breakout.Levels {
                     if (hardened.Contains(symbol)) {
                         Entities.AddEntity(new HardenedBlock(
                             new DynamicShape(position, blockSize),
-                            new Image(Path.Combine("Assets", "Images", images[symbol])
+                            new Image(Path.Combine("Assets", "Images", images[symbol])),
+                            new Image(Path.Combine("Assets", "Images", images[symbol].Substring(0, images[symbol].Length - 4) + "-damaged.png")
                         )));
                     } else if (powerUp.Contains(symbol)) {
                         Entities.AddEntity(new PowerUpBlock(

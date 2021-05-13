@@ -7,7 +7,7 @@ namespace Breakout.Blocks {
     public class PowerUpBlock : Block {
 
         public PowerUpBlock(DynamicShape shape, IBaseImage image) : base(shape, image) {
-            base.Health = 2;
+            base.Health = 1;
             base.Value = 5;
 
         }

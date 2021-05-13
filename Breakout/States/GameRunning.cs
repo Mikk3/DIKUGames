@@ -95,6 +95,11 @@ namespace Breakout.States {
                 ball.speed = ball.speed - 0.05f;
             }
 
+            // Temporary implementation to change level 'SpaceBar' key press
+            if (action == KeyboardAction.KeyPress && key == KeyboardKey.Space) {
+                ball.IsActive = true;
+            }
+
         }
 
         public void RenderState() {

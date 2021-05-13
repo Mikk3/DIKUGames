@@ -16,7 +16,7 @@ using DIKUArcade.Physics;
 namespace Breakout.Ball {
     public class Ball : Entity {
 
-        private bool isActive = false;
+        public bool IsActive = false;
 
         public float speed;
 
@@ -24,12 +24,16 @@ namespace Breakout.Ball {
 
         public Ball(DynamicShape shape, IBaseImage image) : base(shape, image) {
             this.shape = base.Shape.AsDynamicShape();
-            shape.Direction = new Vec2F(0.008f, 0.008f);
+            shape.Direction = new Vec2F(0.005f, 0.01f);
         }
 
         public void Move() {
-            checkBoundary();
-            Shape.Move();
+            if (IsActive) {
+                checkBoundary();
+                Shape.Move();
+            } else {
+                shape.Position = new Vec2F(0.5f,0.085f);
+            }
         }
 
         public void SetMoveLeft(bool val) {

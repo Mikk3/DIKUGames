@@ -12,7 +12,7 @@ Map:
 ------------
 ------------
 ------------
-------------
+############
 ------------
 ------------
 ------------
@@ -27,8 +27,9 @@ Map/
 
 Meta:
 Name: LEVEL 4
+Hardened: #
 Meta/
 
 Legend:
-a) orange-block.png
+#) orange-block.png
 Legend/
