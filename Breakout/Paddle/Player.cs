@@ -16,7 +16,7 @@ namespace Breakout.Paddle {
         private DynamicShape shape;
         private float moveLeft = 0.0f;
         private float moveRight = 0.0f;
-        public readonly float MOVEMENT_SPEED = 0.025f;
+        private readonly float MOVEMENT_SPEED = 0.025f;
 
         public Player(DynamicShape shape, IBaseImage image) : base(shape, image) {
             this.shape = Shape.AsDynamicShape();

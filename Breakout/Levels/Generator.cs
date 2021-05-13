@@ -49,7 +49,7 @@ namespace Breakout.Levels {
 
             var blockSize = calculateBlockSize(rows);
 
-            for (int y = 0; y < rows.Count - 1; y++) {
+            for (int y = 0; y < rows.Count; y++) {
                 for (int x = 0; x < rows[y].Length; x++) {
                     var position = calculatePosition(x, y, blockSize);
                     var symbol = rows[y][x];

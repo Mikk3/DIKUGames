@@ -15,28 +15,23 @@ using DIKUArcade.Physics;
 
 namespace Breakout.Ball {
     public class Ball : Entity {
-
-        public bool IsActive = false;
-
-        public float speed;
+        private bool isActive;
 
         private DynamicShape shape;
 
         public Ball(DynamicShape shape, IBaseImage image) : base(shape, image) {
+            isActive = false;
             this.shape = base.Shape.AsDynamicShape();
             shape.Direction = new Vec2F(0.005f, 0.01f);
         }
 
         public void Move() {
-            if (IsActive) {
+            if (isActive) {
                 checkBoundary();
                 Shape.Move();
             } else {
                 shape.Position = new Vec2F(0.5f,0.085f);
             }
-        }
-
-        public void SetMoveLeft(bool val) {
         }
 
         public void ChangeDirection(Vec2F dir) {
@@ -50,7 +45,6 @@ namespace Breakout.Ball {
                 ChangeDirection(new Vec2F(Math.Abs(shape.Direction.X), shape.Direction.Y * -1));
             }
         }
-
 
         public void CollideWithBlock(Block block, CollisionData data) {
 
@@ -84,6 +78,16 @@ namespace Breakout.Ball {
             if (shape.Position.Y >= 1f - shape.Extent.Y) {
                 shape.Direction.Y = shape.Direction.Y * (-1);
             }
+
+            // Temporary: Reset ball if player lose
+            if (shape.Position.Y <= 0f) {
+                isActive = false;
+            }
         }
+
+        public void Activate() {
+            isActive = true;
+        }
+
     }
 }

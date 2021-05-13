@@ -13,7 +13,7 @@ namespace BreakoutTests.TestGameStates {
         private GameEventBus eventBus;
 
         public StateMachineTest() {
-            eventBus = BreakoutBus.GetBus();
+            eventBus = new GameEventBus();
             eventBus.InitializeEventBus(new List<GameEventType>() {
                 GameEventType.GameStateEvent,
                 GameEventType.ControlEvent,

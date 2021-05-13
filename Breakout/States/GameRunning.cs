@@ -87,7 +87,7 @@ namespace Breakout.States {
 
             // Launch ball when 'Space' is pressed
             if (action == KeyboardAction.KeyPress && key == KeyboardKey.Space) {
-                ball.IsActive = true;
+                ball.Activate();
             }
 
         }
