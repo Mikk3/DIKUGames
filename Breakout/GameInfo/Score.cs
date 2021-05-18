@@ -11,7 +11,7 @@ using System;
 using Breakout.Levels;
 using Breakout.Blocks;
 
-namespace Breakout.Score {
+namespace Breakout.GameInfo {
     public class Score : IGameEventProcessor {
         public int score {get; private set;}
         private Text display;

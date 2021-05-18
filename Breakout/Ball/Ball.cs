@@ -79,15 +79,21 @@ namespace Breakout.Ball {
                 shape.Direction.Y = shape.Direction.Y * (-1);
             }
 
-            // Temporary: Reset ball if player lose
+            // Reset and take life if ball reaches lower boundary.
             if (shape.Position.Y <= 0f) {
                 isActive = false;
+                var gameEvent = new GameEvent();
+                gameEvent.EventType = GameEventType.ControlEvent;
+                gameEvent.Message = "TAKE_LIFE";
+                BreakoutBus.GetBus().RegisterEvent(gameEvent);
             }
         }
 
         public void Activate() {
-            isActive = true;
+            if (!isActive) {
+                shape.Direction = new Vec2F(0.005f, 0.01f);
+                isActive = true;
+            }
         }
-
     }
 }

@@ -3,9 +3,6 @@ using System.IO;
 using DIKUArcade.Events;
 using DIKUArcade.State;
 
-
-
-
 namespace Breakout.States {
     public class StateMachine : IGameEventProcessor {
         public IGameState ActiveState { get; private set; }
@@ -13,9 +10,8 @@ namespace Breakout.States {
             ActiveState = new MainMenu();
         }
 
-        private void SwitchState(GameStateType stateType) {
+        private void SwitchState(GameStateType stateType, int arg = 0, string info = "") {
             switch (stateType) {
-
                 case GameStateType.GameRunning:
                     ActiveState = GameRunning.GetInstance();
                     return;
@@ -24,6 +20,9 @@ namespace Breakout.States {
                     return;
                 case GameStateType.MainMenu:
                     ActiveState = new MainMenu();
+                    return;
+                case GameStateType.GameOver:
+                    ActiveState = new GameOver(arg, info);
                     return;
             }
 
@@ -41,6 +40,9 @@ namespace Breakout.States {
                         break;
                     case "MAIN_MENU":
                         SwitchState(StateTransformer.TransformStringToState(gameEvent.Message));
+                        break;
+                    case "GAME_OVER":
+                        SwitchState(StateTransformer.TransformStringToState(gameEvent.Message), gameEvent.IntArg1, gameEvent.StringArg1);
                         break;
                 }
             }

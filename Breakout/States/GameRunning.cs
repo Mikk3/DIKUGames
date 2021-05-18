@@ -11,19 +11,20 @@ using DIKUArcade.Input;
 using DIKUArcade.Math;
 using DIKUArcade.State;
 using Breakout.Ball;
-using Breakout.Score;
 using Breakout;
+using DIKUArcade.Timers;
+using Breakout.GameInfo;
 
 namespace Breakout.States {
-    public class GameRunning : IGameState {
+    public class GameRunning : IGameState, IGameEventProcessor {
 
         private static GameRunning instance;
-
         private Entity backgroundImage;
         private LevelData leveldata;
         private Player player;
         private Ball.Ball ball;
-        private Score.Score score;
+        private GameInfo.Score score;
+        private Lives lives;
 
         public static GameRunning GetInstance() {
             return instance ?? (instance = new GameRunning());
@@ -44,7 +45,7 @@ namespace Breakout.States {
             leveldata = new LevelData();
 
             // Score
-            score = new Score.Score(new Vec2F(0.0f, 0.5f), new Vec2F(0.5f, 0.5f));
+            score = new GameInfo.Score(new Vec2F(0.0f, 0.5f), new Vec2F(0.5f, 0.5f));
             BreakoutBus.GetBus().Subscribe(GameEventType.ControlEvent, score);
 
 
@@ -60,8 +61,14 @@ namespace Breakout.States {
                 new Image(Path.Combine("Assets", "Images", "ball.png"))
             );
 
-        }
+            // Lives
+            lives = new Lives(new Vec2F(0.8f, 0.5f), new Vec2F(0.5f, 0.5f));
+            BreakoutBus.GetBus().Subscribe(GameEventType.ControlEvent, lives);
 
+            // Gameover
+            BreakoutBus.GetBus().Subscribe(GameEventType.ControlEvent, this);
+
+        }
 
         public void HandleKeyEvent(KeyboardAction action, KeyboardKey key) {
             player.HandleMovement(action, key);
@@ -89,7 +96,6 @@ namespace Breakout.States {
             if (action == KeyboardAction.KeyPress && key == KeyboardKey.Space) {
                 ball.Activate();
             }
-
         }
 
         public void RenderState() {
@@ -98,6 +104,10 @@ namespace Breakout.States {
             ball.RenderEntity();
             player.RenderEntity();
             score.RenderScore();
+            lives.RenderLives();
+            if (leveldata.TimeLimit != null) {
+                leveldata.TimeLimit.RenderTimeLimit();
+            }
         }
 
         public void ResetState() {
@@ -109,7 +119,30 @@ namespace Breakout.States {
             ball.Move();
             Collisions.CheckBallCollisionWithPlayer(ball, player);
             player.Move();
+
+            if (leveldata.TimeLimit != null) {
+                leveldata.TimeLimit.Tick();
+            }
         }
 
+        public void ProcessEvent(GameEvent gameEvent) {
+            if (gameEvent.EventType == GameEventType.ControlEvent && gameEvent.Message == "LOST_GAME") {
+                var newEvent = new GameEvent();
+                newEvent.EventType = GameEventType.GameStateEvent;
+                newEvent.Message = "GAME_OVER";
+                newEvent.IntArg1 = score.score;
+                newEvent.StringArg1 = Boolean.FalseString;
+                BreakoutBus.GetBus().RegisterEvent(newEvent);
+            }
+
+            if (gameEvent.EventType == GameEventType.ControlEvent && gameEvent.Message == "WON_GAME") {
+                var newEvent = new GameEvent();
+                newEvent.EventType = GameEventType.GameStateEvent;
+                newEvent.Message = "GAME_OVER";
+                newEvent.IntArg1 = score.score;
+                newEvent.StringArg1 = Boolean.TrueString;
+                BreakoutBus.GetBus().RegisterEvent(newEvent);
+            }
+        }
     }
 }

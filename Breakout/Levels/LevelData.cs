@@ -6,6 +6,8 @@ using System;
 using DIKUArcade.Events;
 using Breakout.States;
 using DIKUArcade.Utilities;
+using Breakout.GameInfo;
+using DIKUArcade.Math;
 
 namespace Breakout.Levels {
 
@@ -18,8 +20,8 @@ namespace Breakout.Levels {
         public Dictionary<string, string> MetaList { get; private set; }
         public Dictionary<char, string> LegendList { get; private set; }
         public List<string> RowsList { get; private set; }
-
         private Queue<string> LevelQueue;
+        public Timer TimeLimit;
 
         public LevelData() {
             LevelQueue = new Queue<string>();
@@ -38,13 +40,19 @@ namespace Breakout.Levels {
 
         public void NextLevel() {
             if (LevelQueue.TryDequeue(out string levelname)) {
-                System.Console.WriteLine("INFO: Loaded level: {0}", levelname);
                 level = levelname;
                 createBlocks();
+                createTimer();
+
+                Console.WriteLine("INFO: Loaded level: {0}", levelname);
             } else {
-                System.Console.WriteLine("INFO: No more levels left");
                 GameRunning.DeleteInstance();
-                LoadMainMenu();
+                Console.WriteLine("INFO: No more levels left");
+
+                var gameEvent = new GameEvent();
+                gameEvent.EventType = GameEventType.ControlEvent;
+                gameEvent.Message = "WON_GAME";
+                BreakoutBus.GetBus().RegisterEvent(gameEvent);
             }
         }
 
@@ -58,20 +66,34 @@ namespace Breakout.Levels {
                 Blocks = Generator.GenerateBlocksContainer(RowsList, MetaList, LegendList);
             } catch (FileNotFoundException) {
                 System.Console.WriteLine("ERROR: {0} does not exist.", level);
-                LoadMainMenu();
+                loadMainMenu();
             } catch (InvalidDataException) {
                 System.Console.WriteLine("ERROR: {0} contains invalid level data.", level);
-                LoadMainMenu();
+                loadMainMenu();
             }
 
         }
 
-        private void LoadMainMenu() {
+        private void loadMainMenu() {
             System.Console.WriteLine("INFO: Returning to Main Menu");
             var gameEvent = new GameEvent();
             gameEvent.EventType = GameEventType.GameStateEvent;
             gameEvent.Message = "MAIN_MENU";
             BreakoutBus.GetBus().RegisterEvent(gameEvent);
         }
+
+        private void createTimer() {
+            if (MetaList.ContainsKey("Time")) {
+                TimeLimit = new Timer(
+                    new Vec2F(0.4f, 0.5f),
+                    new Vec2F(0.5f, 0.5f),
+                    Int32.Parse(MetaList["Time"])
+                );
+            } else {
+                TimeLimit = null;
+            }
+        }
+
+
     }
 }
