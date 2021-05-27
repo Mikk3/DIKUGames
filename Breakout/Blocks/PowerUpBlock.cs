@@ -21,7 +21,14 @@ namespace Breakout.Blocks {
 
         public override void OnDestroy() {
             // Create Powerup
-            // Change player score using event?
+            // var gameEvent = new GameEvent();
+            // gameEvent.EventType = GameEventType.ControlEvent;
+            // gameEvent.Message = "CREATE_POWERUP";
+            // gameEvent.ObjectArg1 = this;
+            // BreakoutBus.GetBus().RegisterEvent(gameEvent);
+
+            // Change player score
+
             var gameEvent = new GameEvent();
             gameEvent.EventType = GameEventType.ControlEvent;
             gameEvent.Message = "ADD_SCORE";

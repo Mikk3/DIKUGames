@@ -8,7 +8,7 @@ using DIKUArcade.GUI;
 using Breakout;
 using DIKUArcade.Events;
 using System.Collections.Generic;
-using Breakout.Score;
+using Breakout.GameInfo;
 
 namespace BreakoutTests {
     public class ScoreTest {

@@ -94,6 +94,16 @@ namespace Breakout.Levels {
             }
         }
 
-
+        public void CheckLevelOver() {
+            var count = 0;
+            foreach (var block in Blocks) {
+                if (block.GetType() != typeof(UnbreakableBlock)) {
+                    count++;
+                }
+            }
+            if (count == 0) {
+                NextLevel();
+            }
+        }
     }
 }

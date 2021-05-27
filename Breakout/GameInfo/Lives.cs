@@ -3,13 +3,13 @@ using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 
 namespace Breakout.GameInfo {
-    public class Lives: IGameEventProcessor {
+    public class Lives : IGameEventProcessor {
         private int lives;
         private Text display;
         public Lives(Vec2F position, Vec2F extent) {
             lives = 3;
             display = new Text(lives.ToString(), position, extent);
-            display.SetColor(new Vec3F(0.01f,0.55f, 0.63f));
+            display.SetColor(new Vec3F(0.01f, 0.55f, 0.63f));
         }
 
         public void RenderLives() {
@@ -30,9 +30,18 @@ namespace Breakout.GameInfo {
             }
         }
 
+        private void GiveLife() {
+            lives++;
+        }
+
         public void ProcessEvent(GameEvent gameEvent) {
-            if (gameEvent.EventType == GameEventType.ControlEvent && gameEvent.Message == "TAKE_LIFE") {
-                TakeLife();
+            if (gameEvent.EventType == GameEventType.ControlEvent) {
+                if (gameEvent.Message == "TAKE_LIFE") {
+                    TakeLife();
+                }
+                if (gameEvent.Message == "GIVE_LIFE") {
+                    GiveLife();
+                }
             }
         }
     }

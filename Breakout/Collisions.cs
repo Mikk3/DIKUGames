@@ -4,6 +4,7 @@ using DIKUArcade.Entities;
 using DIKUArcade.Events;
 using DIKUArcade.Math;
 using DIKUArcade.Physics;
+using Breakout.PowerUps;
 
 namespace Breakout
 {
@@ -26,6 +27,12 @@ namespace Breakout
                 ball.CollideWithPlayer(player);
             }
         }
-    }
 
+        public static void CheckPowerUpCollisionWithPlayer(IPowerUp powerUp, Player player) {
+            var data = CollisionDetection.Aabb(powerUp.shape.AsDynamicShape(), player.Shape);
+            if (data.Collision) {
+                powerUp.Activate();
+            }
+        }
+    }
 }

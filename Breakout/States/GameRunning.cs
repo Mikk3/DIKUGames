@@ -14,6 +14,7 @@ using Breakout.Ball;
 using Breakout;
 using DIKUArcade.Timers;
 using Breakout.GameInfo;
+using Breakout.PowerUps;
 
 namespace Breakout.States {
     public class GameRunning : IGameState, IGameEventProcessor {
@@ -25,6 +26,7 @@ namespace Breakout.States {
         private Ball.Ball ball;
         private GameInfo.Score score;
         private Lives lives;
+        private PowerUpController powerUpController;
 
         public static GameRunning GetInstance() {
             return instance ?? (instance = new GameRunning());
@@ -47,6 +49,7 @@ namespace Breakout.States {
             // Score
             score = new GameInfo.Score(new Vec2F(0.0f, 0.5f), new Vec2F(0.5f, 0.5f));
             BreakoutBus.GetBus().Subscribe(GameEventType.ControlEvent, score);
+            BreakoutBus.GetBus().Subscribe(GameEventType.TimedEvent, score);
 
 
             //Player
@@ -68,6 +71,11 @@ namespace Breakout.States {
             // Gameover
             BreakoutBus.GetBus().Subscribe(GameEventType.ControlEvent, this);
 
+            // Powerup Controller
+            powerUpController = new PowerUpController();
+            BreakoutBus.GetBus().Subscribe(GameEventType.ControlEvent, powerUpController);
+
+
         }
 
         public void HandleKeyEvent(KeyboardAction action, KeyboardKey key) {
@@ -80,22 +88,30 @@ namespace Breakout.States {
                 BreakoutBus.GetBus().RegisterEvent(closeEvent);
             }
 
-            // Temporary implementation to damage block on 'D' key press
+            // Launch ball when 'Space' is pressed
+            if (action == KeyboardAction.KeyPress && key == KeyboardKey.Space) {
+                ball.Activate();
+            }
+
+            ///////////////////////////////////////////////////////////////////////
+            // TEMP: implementation to damage block on 'D' key press
             if (action == KeyboardAction.KeyPress && key == KeyboardKey.D) {
                 leveldata.Blocks.Iterate(x => {
                     x.OnHit();
                 });
             }
 
-            // Temporary implementation to change level 'L' key press
+            // TEMP: implementation to change level 'L' key press
             if (action == KeyboardAction.KeyPress && key == KeyboardKey.L) {
                 leveldata.NextLevel();
             }
 
-            // Launch ball when 'Space' is pressed
-            if (action == KeyboardAction.KeyPress && key == KeyboardKey.Space) {
-                ball.Activate();
+            // TEMP: start double score event on 'P' key press
+            if (action == KeyboardAction.KeyPress && key == KeyboardKey.P) {
+                powerUpController.CreateRandomPowerup(new Vec2F(0.1f, 0.1f));
             }
+            ///////////////////////////////////////////////////////////////////////
+
         }
 
         public void RenderState() {
@@ -105,6 +121,9 @@ namespace Breakout.States {
             player.RenderEntity();
             score.RenderScore();
             lives.RenderLives();
+            powerUpController.PowerUps.RenderEntities();
+
+
             if (leveldata.TimeLimit != null) {
                 leveldata.TimeLimit.RenderTimeLimit();
             }
@@ -117,8 +136,17 @@ namespace Breakout.States {
         public void UpdateState() {
             Collisions.CheckBallCollisionsWithBlock(ball, leveldata.Blocks);
             ball.Move();
+
             Collisions.CheckBallCollisionWithPlayer(ball, player);
             player.Move();
+
+            powerUpController.PowerUps.Iterate(x => {
+                Collisions.CheckPowerUpCollisionWithPlayer(x, player)
+            });
+
+            powerUpController.MovePowerUps();
+
+            leveldata.CheckLevelOver();
 
             if (leveldata.TimeLimit != null) {
                 leveldata.TimeLimit.Tick();
@@ -126,22 +154,27 @@ namespace Breakout.States {
         }
 
         public void ProcessEvent(GameEvent gameEvent) {
-            if (gameEvent.EventType == GameEventType.ControlEvent && gameEvent.Message == "LOST_GAME") {
-                var newEvent = new GameEvent();
-                newEvent.EventType = GameEventType.GameStateEvent;
-                newEvent.Message = "GAME_OVER";
-                newEvent.IntArg1 = score.score;
-                newEvent.StringArg1 = Boolean.FalseString;
-                BreakoutBus.GetBus().RegisterEvent(newEvent);
-            }
+            if (gameEvent.EventType == GameEventType.ControlEvent) {
 
-            if (gameEvent.EventType == GameEventType.ControlEvent && gameEvent.Message == "WON_GAME") {
-                var newEvent = new GameEvent();
-                newEvent.EventType = GameEventType.GameStateEvent;
-                newEvent.Message = "GAME_OVER";
-                newEvent.IntArg1 = score.score;
-                newEvent.StringArg1 = Boolean.TrueString;
-                BreakoutBus.GetBus().RegisterEvent(newEvent);
+
+                if (gameEvent.Message == "LOST_GAME") {
+                    var newEvent = new GameEvent();
+                    newEvent.EventType = GameEventType.GameStateEvent;
+                    newEvent.Message = "GAME_OVER";
+                    newEvent.IntArg1 = score.score;
+                    newEvent.StringArg1 = Boolean.FalseString;
+                    BreakoutBus.GetBus().RegisterEvent(newEvent);
+                }
+
+                if (gameEvent.Message == "WON_GAME") {
+                    var newEvent = new GameEvent();
+                    newEvent.EventType = GameEventType.GameStateEvent;
+                    newEvent.Message = "GAME_OVER";
+                    newEvent.IntArg1 = score.score;
+                    newEvent.StringArg1 = Boolean.TrueString;
+                    BreakoutBus.GetBus().RegisterEvent(newEvent);
+                }
+
             }
         }
     }

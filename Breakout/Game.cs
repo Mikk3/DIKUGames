@@ -33,7 +33,8 @@ namespace Breakout {
             eventBus.InitializeEventBus(new List<GameEventType> {
                 GameEventType.WindowEvent,
                 GameEventType.GameStateEvent,
-                GameEventType.ControlEvent
+                GameEventType.ControlEvent,
+                GameEventType.TimedEvent
             });
             eventBus.Subscribe(GameEventType.GameStateEvent, stateMachine);
             eventBus.Subscribe(GameEventType.WindowEvent, this);
