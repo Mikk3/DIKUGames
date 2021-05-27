@@ -13,10 +13,10 @@ a--qqqqqq--a
 -----aa-----
 -----aa-----
 -####aa####-
--#---aa---#-
--#---aa---#-
------aa-----
----##aa##---
+-#---cc---#-
+-#---cc---#-
+-----cc-----
+---##cc##---
 ------------
 ------------
 ------------
@@ -29,10 +29,12 @@ Meta:
 Name: LEVEL 4
 Unbreakable: #
 Hardened: q
+PowerUp: a
 Meta/
 
 Legend:
 #) grey-block.png
 q) orange-block.png
 a) blue-block.png
+c) blue-block.png
 Legend/

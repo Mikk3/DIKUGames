@@ -1,6 +1,7 @@
 using DIKUArcade.Entities;
 using DIKUArcade.Events;
 using DIKUArcade.Graphics;
+using DIKUArcade.Math;
 
 namespace Breakout.Blocks {
 
@@ -21,19 +22,19 @@ namespace Breakout.Blocks {
 
         public override void OnDestroy() {
             // Create Powerup
-            // var gameEvent = new GameEvent();
-            // gameEvent.EventType = GameEventType.ControlEvent;
-            // gameEvent.Message = "CREATE_POWERUP";
-            // gameEvent.ObjectArg1 = this;
-            // BreakoutBus.GetBus().RegisterEvent(gameEvent);
+            var createEvent = new GameEvent();
+            createEvent.EventType = GameEventType.ControlEvent;
+            createEvent.Message = "CREATE_POWERUP";
+            createEvent.ObjectArg1 = Shape.Position;
+            BreakoutBus.GetBus().RegisterEvent(createEvent);
 
             // Change player score
 
-            var gameEvent = new GameEvent();
-            gameEvent.EventType = GameEventType.ControlEvent;
-            gameEvent.Message = "ADD_SCORE";
-            gameEvent.IntArg1 = Value;
-            BreakoutBus.GetBus().RegisterEvent(gameEvent);
+            var scoreEvent = new GameEvent();
+            scoreEvent.EventType = GameEventType.ControlEvent;
+            scoreEvent.Message = "ADD_SCORE";
+            scoreEvent.IntArg1 = Value;
+            BreakoutBus.GetBus().RegisterEvent(scoreEvent);
 
             this.DeleteEntity();
         }

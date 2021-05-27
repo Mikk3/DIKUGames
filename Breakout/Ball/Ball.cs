@@ -12,12 +12,16 @@ using Breakout.Levels;
 using Breakout.Paddle;
 using Breakout.Blocks;
 using DIKUArcade.Physics;
+using DIKUArcade.Events.Generic;
 
 namespace Breakout.Ball {
-    public class Ball : Entity {
+    public class Ball : Entity, IGameEventProcessor {
         private bool isActive;
 
         private DynamicShape shape;
+
+        private bool doubleSizeEnabled = false;
+        private bool doubleSpeedEnabled = false;
 
         public Ball(DynamicShape shape, IBaseImage image) : base(shape, image) {
             isActive = false;
@@ -93,6 +97,50 @@ namespace Breakout.Ball {
             if (!isActive) {
                 shape.Direction = new Vec2F(0.005f, 0.01f);
                 isActive = true;
+            }
+        }
+
+
+        public void IncreaseSize() {
+            this.shape.Extent = new Vec2F(this.shape.Extent.X*2f, this.shape.Extent.Y*2f);
+            this.shape.Position = new Vec2F(
+                this.shape.Position.X + 0.5f * (this.shape.Extent.X * (this.shape.Position.X/Math.Abs(this.shape.Position.X))),
+                this.shape.Position.Y + 0.5f * (this.shape.Extent.Y * (this.shape.Position.Y/Math.Abs(this.shape.Position.Y))));
+            doubleSizeEnabled = true;
+        }
+        public void DecreaseSize() {
+            this.shape.Extent = new Vec2F(0.022f, 0.022f);
+            doubleSizeEnabled = false;
+
+        }
+
+        public void IncreaseSpeed() {
+            shape.Direction = shape.Direction * 2;
+            doubleSpeedEnabled = true;
+        }
+
+        public void DecreaseSpeed() {
+           shape.Direction = shape.Direction / 2;
+           doubleSpeedEnabled = false;
+        }
+
+        public void ProcessEvent(GameEvent gameEvent) {
+            if (gameEvent.EventType == GameEventType.ControlEvent) {
+                if (gameEvent.Message == "ENABLE_DOUBLE_SIZE" && !doubleSizeEnabled) {
+                    IncreaseSize();
+                }
+                if (gameEvent.Message == "ENABLE_DOUBLE_SPEED" && !doubleSpeedEnabled) {
+                    IncreaseSpeed();
+                }
+            }
+
+            if (gameEvent.EventType == GameEventType.TimedEvent) {
+                if (gameEvent.Message == "DISABLE_DOUBLE_SIZE" && doubleSizeEnabled) {
+                    DecreaseSize();
+                }
+                if (gameEvent.Message == "DISABLE_DOUBLE_SPEED" && doubleSpeedEnabled) {
+                    DecreaseSpeed();
+                }
             }
         }
     }

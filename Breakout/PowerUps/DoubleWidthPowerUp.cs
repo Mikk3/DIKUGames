@@ -7,25 +7,24 @@ using DIKUArcade.Timers;
 
 namespace Breakout.PowerUps {
 
-    public class DoubleScorePowerUp : PowerUp {
+    public class DoubleWidthPowerUp : PowerUp {
 
-        public DoubleScorePowerUp(Shape shape, IBaseImage image) : base(shape, image) {
+        public DoubleWidthPowerUp(Shape shape, IBaseImage image) : base(shape, image) {
 
         }
 
         public override void Activate() {
-            // Enable double score
+            // Enable double width
             var enableEvent = new GameEvent();
             enableEvent.EventType = GameEventType.ControlEvent;
-            enableEvent.Message = "ENABLE_DOUBLE_SCORE";
+            enableEvent.Message = "ENABLE_DOUBLE_WIDTH";
             BreakoutBus.GetBus().RegisterEvent(enableEvent);
 
-            // Disable double score after x seconds
+            // Disable double width after x seconds
             var disableEvent = new GameEvent();
             disableEvent.EventType = GameEventType.TimedEvent;
-            disableEvent.Message = "DISABLE_DOUBLE_SCORE";
-            BreakoutBus.GetBus().RegisterTimedEvent(disableEvent, TimePeriod.NewMilliseconds(15000));
-
+            disableEvent.Message = "DISABLE_DOUBLE_WIDTH";
+            BreakoutBus.GetBus().RegisterTimedEvent(disableEvent, TimePeriod.NewMilliseconds(10000));
             this.DeleteEntity();
         }
 

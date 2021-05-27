@@ -7,23 +7,23 @@ using DIKUArcade.Timers;
 
 namespace Breakout.PowerUps {
 
-    public class DoubleScorePowerUp : PowerUp {
+    public class DoubleSpeedPowerUp : PowerUp {
 
-        public DoubleScorePowerUp(Shape shape, IBaseImage image) : base(shape, image) {
+        public DoubleSpeedPowerUp(Shape shape, IBaseImage image) : base(shape, image) {
 
         }
 
         public override void Activate() {
-            // Enable double score
+            // Enable double speed
             var enableEvent = new GameEvent();
             enableEvent.EventType = GameEventType.ControlEvent;
-            enableEvent.Message = "ENABLE_DOUBLE_SCORE";
+            enableEvent.Message = "ENABLE_DOUBLE_SPEED";
             BreakoutBus.GetBus().RegisterEvent(enableEvent);
 
-            // Disable double score after x seconds
+            // Disable double speed after x seconds
             var disableEvent = new GameEvent();
             disableEvent.EventType = GameEventType.TimedEvent;
-            disableEvent.Message = "DISABLE_DOUBLE_SCORE";
+            disableEvent.Message = "DISABLE_DOUBLE_SPEED";
             BreakoutBus.GetBus().RegisterTimedEvent(disableEvent, TimePeriod.NewMilliseconds(15000));
 
             this.DeleteEntity();

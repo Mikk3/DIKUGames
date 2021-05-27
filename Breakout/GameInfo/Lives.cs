@@ -1,6 +1,7 @@
 using DIKUArcade.Events;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
+using System;
 
 namespace Breakout.GameInfo {
     public class Lives : IGameEventProcessor {
@@ -26,12 +27,12 @@ namespace Breakout.GameInfo {
                 gameEvent.Message = "LOST_GAME";
                 BreakoutBus.GetBus().RegisterEvent(gameEvent);
 
-                System.Console.WriteLine("INFO: Player is out of lives");
             }
         }
 
         private void GiveLife() {
             lives++;
+            display.SetText(lives.ToString());
         }
 
         public void ProcessEvent(GameEvent gameEvent) {

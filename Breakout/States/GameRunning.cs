@@ -57,12 +57,16 @@ namespace Breakout.States {
                 new DynamicShape(new Vec2F(0.50f, 0.035f), new Vec2F(0.224f, 0.044f)),
                 new Image(Path.Combine("Assets", "Images", "player.png"))
             );
+            BreakoutBus.GetBus().Subscribe(GameEventType.ControlEvent, player);
+            BreakoutBus.GetBus().Subscribe(GameEventType.TimedEvent, player);
 
             // Ball
             ball = new Ball.Ball(
                 new DynamicShape(new Vec2F(0.324f, 0.044f), new Vec2F(0.022f, 0.022f)),
                 new Image(Path.Combine("Assets", "Images", "ball.png"))
             );
+            BreakoutBus.GetBus().Subscribe(GameEventType.ControlEvent, ball);
+            BreakoutBus.GetBus().Subscribe(GameEventType.TimedEvent, ball);
 
             // Lives
             lives = new Lives(new Vec2F(0.8f, 0.5f), new Vec2F(0.5f, 0.5f));
@@ -93,20 +97,20 @@ namespace Breakout.States {
                 ball.Activate();
             }
 
-            ///////////////////////////////////////////////////////////////////////
-            // TEMP: implementation to damage block on 'D' key press
+            /////////////////////// TEMPOARY FUNCTIONS //////////////////////////////
+            // TEMP
             if (action == KeyboardAction.KeyPress && key == KeyboardKey.D) {
                 leveldata.Blocks.Iterate(x => {
                     x.OnHit();
                 });
             }
 
-            // TEMP: implementation to change level 'L' key press
+            // TEMP
             if (action == KeyboardAction.KeyPress && key == KeyboardKey.L) {
                 leveldata.NextLevel();
             }
 
-            // TEMP: start double score event on 'P' key press
+            // TEMP
             if (action == KeyboardAction.KeyPress && key == KeyboardKey.P) {
                 powerUpController.CreateRandomPowerup(new Vec2F(0.1f, 0.1f));
             }
@@ -141,7 +145,7 @@ namespace Breakout.States {
             player.Move();
 
             powerUpController.PowerUps.Iterate(x => {
-                Collisions.CheckPowerUpCollisionWithPlayer(x, player)
+                Collisions.CheckPowerUpCollisionWithPlayer(x, player);
             });
 
             powerUpController.MovePowerUps();

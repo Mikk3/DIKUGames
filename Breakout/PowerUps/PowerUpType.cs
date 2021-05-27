@@ -3,7 +3,7 @@ namespace Breakout.PowerUps
     public enum PowerUpType {
         DoubleScore,
         ExtraLife,
-        ExtraBall,
+        DoubleSize,
         DoubleWidth,
         DoubleSpeed
     }

@@ -42,8 +42,7 @@ namespace Breakout.GameInfo {
                 if (gameEvent.Message == "ADD_SCORE") {
                     AddScore(gameEvent.IntArg1);
                 }
-                if (gameEvent.Message == "ENABLE_DOUBLE_SCORE") {
-                    System.Console.WriteLine("double score enabled");
+                if (gameEvent.Message == "ENABLE_DOUBLE_SCORE" && doubleScore == false) {
                     doubleScore = true;
                 }
             }

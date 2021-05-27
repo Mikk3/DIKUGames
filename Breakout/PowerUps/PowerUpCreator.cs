@@ -9,7 +9,7 @@ namespace Breakout.Powerups
 
 {
     public class PowerUpCreator {
-        public static Entity Create (PowerUpType type, Vec2F position) {
+        public static PowerUp Create (PowerUpType type, Vec2F position) {
            switch (type)
             {
                 case PowerUpType.DoubleScore:
@@ -19,16 +19,28 @@ namespace Breakout.Powerups
                     );
 
                 case PowerUpType.ExtraLife:
-                    throw new NotImplementedException();
+                    return new ExtraLifePowerUp(
+                        new DynamicShape(position, new Vec2F(0.05f, 0.05f)),
+                        new Image(Path.Combine("Assets", "Images", "LifePickUp.png"))
+                    );
 
-                case PowerUpType.ExtraBall:
-                    throw new NotImplementedException();
+                case PowerUpType.DoubleSize:
+                    return new DoubleSizePowerUp(
+                        new DynamicShape(position, new Vec2F(0.05f, 0.05f)),
+                        new Image(Path.Combine("Assets", "Images", "BigPowerUp.png"))
+                    );
 
                 case PowerUpType.DoubleWidth:
-                    throw new NotImplementedException();
+                    return new DoubleWidthPowerUp(
+                        new DynamicShape(position, new Vec2F(0.05f, 0.05f)),
+                        new Image(Path.Combine("Assets", "Images", "WidePowerUp.png"))
+                    );
 
                 case PowerUpType.DoubleSpeed:
-                   throw new NotImplementedException();
+                   return new DoubleSpeedPowerUp(
+                        new DynamicShape(position, new Vec2F(0.05f, 0.05f)),
+                        new Image(Path.Combine("Assets", "Images", "SpeedPickUp.png"))
+                    );
 
             }
             throw new ArgumentException("String did not match any GameStateTypes");

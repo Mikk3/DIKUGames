@@ -11,11 +11,12 @@ using System;
 using Breakout.Levels;
 
 namespace Breakout.Paddle {
-    public class Player : Entity {
+    public class Player : Entity, IGameEventProcessor {
 
         private DynamicShape shape;
         private float moveLeft = 0.0f;
         private float moveRight = 0.0f;
+        private bool DoubleWidthEnabled = false;
         private readonly float MOVEMENT_SPEED = 0.025f;
 
         public Player(DynamicShape shape, IBaseImage image) : base(shape, image) {
@@ -93,6 +94,34 @@ namespace Breakout.Paddle {
                     break;
                 default:
                     break;
+            }
+        }
+
+
+        public void IncreaseWidth() {
+            this.shape.Extent = new Vec2F(this.shape.Extent.X*2f, this.shape.Extent.Y);
+            this.shape.Position = new Vec2F((this.shape.Position.X) - (this.shape.Extent.X * 0.5f), this.shape.Position.Y);
+            DoubleWidthEnabled = true;
+
+        }
+        public void DecreaseWidth() {
+            this.shape.Extent = new Vec2F(this.shape.Extent.X*0.5f, this.shape.Extent.Y);
+            this.shape.Position = new Vec2F((this.shape.Position.X) + (this.shape.Extent.X * 0.25f), this.shape.Position.Y);
+            DoubleWidthEnabled = false;
+
+        }
+
+        public void ProcessEvent(GameEvent gameEvent) {
+            if (gameEvent.EventType == GameEventType.ControlEvent) {
+                if (gameEvent.Message == "ENABLE_DOUBLE_WIDTH" && !DoubleWidthEnabled) {
+                    IncreaseWidth();
+                }
+            }
+
+            if (gameEvent.EventType == GameEventType.TimedEvent) {
+                if (gameEvent.Message == "DISABLE_DOUBLE_WIDTH" && DoubleWidthEnabled) {
+                    DecreaseWidth();
+                }
             }
         }
     }

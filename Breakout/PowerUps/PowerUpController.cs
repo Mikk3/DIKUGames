@@ -13,10 +13,10 @@ namespace Breakout.PowerUps {
 
     public class PowerUpController : IGameEventProcessor {
 
-        public EntityContainer<Entity> PowerUps;
+        public EntityContainer<PowerUp> PowerUps;
 
         public PowerUpController() {
-            PowerUps = new EntityContainer<Entity>();
+            PowerUps = new EntityContainer<PowerUp>();
         }
 
         public void CreatePowerup(PowerUpType type, Vec2F position) {
@@ -27,8 +27,10 @@ namespace Breakout.PowerUps {
 
         public void CreateRandomPowerup(Vec2F position) {
             var numOfPowerUps = 5;
-            int rand = new Random().Next(numOfPowerUps-1);
-            CreatePowerup(PowerUpType.DoubleScore, position);
+            Random rand = new Random();
+            PowerUpType type = (PowerUpType) rand.Next(numOfPowerUps);
+
+            CreatePowerup(type, position);
 
         }
 
@@ -36,11 +38,15 @@ namespace Breakout.PowerUps {
             PowerUps.Iterate(x => {
                 x.Shape.Move();
             });
-
         }
 
         public void ProcessEvent(GameEvent gameEvent) {
-            throw new NotImplementedException();
+            if (gameEvent.EventType == GameEventType.ControlEvent && gameEvent.Message == "CREATE_POWERUP") {
+                var pos = gameEvent.ObjectArg1;
+
+                CreateRandomPowerup((Vec2F) pos);
+
+            }
         }
     }
 }

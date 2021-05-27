@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using DIKUArcade.Events;
 using DIKUArcade.State;
+using DIKUArcade.Timers;
 
 namespace Breakout.States {
     public class StateMachine : IGameEventProcessor {
@@ -14,15 +15,19 @@ namespace Breakout.States {
             switch (stateType) {
                 case GameStateType.GameRunning:
                     ActiveState = GameRunning.GetInstance();
+                    StaticTimer.ResumeTimer();
                     return;
                 case GameStateType.GamePaused:
                     ActiveState = new GamePaused();
+                    StaticTimer.PauseTimer();
                     return;
                 case GameStateType.MainMenu:
                     ActiveState = new MainMenu();
+                    StaticTimer.RestartTimer();
                     return;
                 case GameStateType.GameOver:
                     ActiveState = new GameOver(arg, info);
+                    StaticTimer.RestartTimer();
                     return;
             }
 

@@ -28,8 +28,8 @@ namespace Breakout
             }
         }
 
-        public static void CheckPowerUpCollisionWithPlayer(IPowerUp powerUp, Player player) {
-            var data = CollisionDetection.Aabb(powerUp.shape.AsDynamicShape(), player.Shape);
+        public static void CheckPowerUpCollisionWithPlayer(PowerUp powerUp, Player player) {
+            var data = CollisionDetection.Aabb(powerUp.Shape.AsDynamicShape(), player.Shape);
             if (data.Collision) {
                 powerUp.Activate();
             }
