@@ -165,7 +165,7 @@ namespace Breakout.States {
                     var newEvent = new GameEvent();
                     newEvent.EventType = GameEventType.GameStateEvent;
                     newEvent.Message = "GAME_OVER";
-                    newEvent.IntArg1 = score.score;
+                    newEvent.IntArg1 = score.Value;
                     newEvent.StringArg1 = Boolean.FalseString;
                     BreakoutBus.GetBus().RegisterEvent(newEvent);
                 }
@@ -174,7 +174,7 @@ namespace Breakout.States {
                     var newEvent = new GameEvent();
                     newEvent.EventType = GameEventType.GameStateEvent;
                     newEvent.Message = "GAME_OVER";
-                    newEvent.IntArg1 = score.score;
+                    newEvent.IntArg1 = score.Value;
                     newEvent.StringArg1 = Boolean.TrueString;
                     BreakoutBus.GetBus().RegisterEvent(newEvent);
                 }

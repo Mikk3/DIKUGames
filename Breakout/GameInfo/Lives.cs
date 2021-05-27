@@ -5,11 +5,11 @@ using System;
 
 namespace Breakout.GameInfo {
     public class Lives : IGameEventProcessor {
-        private int lives;
+        public int Value { get; private set; }
         private Text display;
         public Lives(Vec2F position, Vec2F extent) {
-            lives = 3;
-            display = new Text(lives.ToString(), position, extent);
+            Value = 3;
+            display = new Text(Value.ToString(), position, extent);
             display.SetColor(new Vec3F(0.01f, 0.55f, 0.63f));
         }
 
@@ -18,9 +18,9 @@ namespace Breakout.GameInfo {
         }
 
         private void TakeLife() {
-            if (lives > 1) {
-                lives--;
-                display.SetText(lives.ToString());
+            if (Value > 1) {
+                Value--;
+                display.SetText(Value.ToString());
             } else {
                 var gameEvent = new GameEvent();
                 gameEvent.EventType = GameEventType.ControlEvent;
@@ -31,8 +31,8 @@ namespace Breakout.GameInfo {
         }
 
         private void GiveLife() {
-            lives++;
-            display.SetText(lives.ToString());
+            Value++;
+            display.SetText(Value.ToString());
         }
 
         public void ProcessEvent(GameEvent gameEvent) {

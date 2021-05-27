@@ -4,6 +4,7 @@ using Breakout;
 using DIKUArcade.GUI;
 using DIKUArcade.Events;
 using System.Collections.Generic;
+using System;
 
 namespace BreakoutTests.TestGameStates {
 
@@ -17,6 +18,7 @@ namespace BreakoutTests.TestGameStates {
             eventBus.InitializeEventBus(new List<GameEventType>() {
                 GameEventType.GameStateEvent,
                 GameEventType.ControlEvent,
+                GameEventType.TimedEvent
             });
         }
 
@@ -44,6 +46,18 @@ namespace BreakoutTests.TestGameStates {
             Assert.That(stateMachine.ActiveState, Is.InstanceOf<GameRunning>());
         }
 
-    }
+        [Test]
+        public void TestChangeStateToGameOver() {
+            var gameEvent = new GameEvent();
+            gameEvent.EventType = GameEventType.GameStateEvent;
+            gameEvent.Message = "GAME_OVER";
+            gameEvent.IntArg1 = 100;
+            gameEvent.StringArg1 = Boolean.FalseString;
+            eventBus.RegisterEvent(gameEvent);
+            eventBus.ProcessEvents();
 
+            Assert.That(stateMachine.ActiveState, Is.InstanceOf<GameOver>());
+        }
+
+    }
 }

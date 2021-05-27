@@ -31,6 +31,14 @@ namespace BreakoutTests.TestGameStates
         }
 
         [Test]
+        public void TestTransformStateToStringGameOver() {
+            var result = StateTransformer.TransformStateToString(
+                GameStateType.GameOver);
+
+            Assert.That(result, Is.EqualTo("GAME_OVER"));
+        }
+
+        [Test]
         public void TestTransformStringToStateMainMenu() {
             var result = StateTransformer.TransformStringToState("MAIN_MENU");
 
@@ -49,6 +57,13 @@ namespace BreakoutTests.TestGameStates
             var result = StateTransformer.TransformStringToState("GAME_RUNNING");
 
             Assert.That(result, Is.EqualTo(GameStateType.GameRunning));
+        }
+
+        [Test]
+        public void TestTransformStringToStateGameOver() {
+            var result = StateTransformer.TransformStringToState("GAME_OVER");
+
+            Assert.That(result, Is.EqualTo(GameStateType.GameOver));
         }
 
     }

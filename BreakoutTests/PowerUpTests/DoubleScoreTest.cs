@@ -1,24 +1,25 @@
 using NUnit.Framework;
 using DIKUArcade.Entities;
-using Breakout.Blocks;
 using DIKUArcade.Math;
 using DIKUArcade.Graphics;
 using System.IO;
 using DIKUArcade.GUI;
+using Breakout.PowerUps;
 using Breakout;
-using DIKUArcade.Events;
 using System.Collections.Generic;
+using DIKUArcade.Events;
+using Breakout.Ball;
+using Breakout.Powerups;
 using Breakout.GameInfo;
 
 namespace BreakoutTests {
-    public class ScoreTest {
+    public class DoubleScoreTest {
 
-        private Block block;
-        private Score score;
+        Score score;
         private GameEventBus eventBus;
 
-        public ScoreTest() {
-            eventBus = new GameEventBus();
+        public DoubleScoreTest() {
+            eventBus = BreakoutBus.GetBus();
             eventBus.InitializeEventBus(new List<GameEventType>() {
                 GameEventType.ControlEvent,
             });
@@ -27,27 +28,31 @@ namespace BreakoutTests {
         [SetUp]
         public void Setup() {
             Window.CreateOpenGLContext();
-
-            score = new Score(new Vec2F(0.5f,0.5f), new Vec2F(0.5f,0.5f));
+            score = new Score(new Vec2F(0.1f,0.1f), new Vec2F(0.1f,0.1f));
 
             eventBus.Subscribe(GameEventType.ControlEvent, score);
 
-            block = new NormalBlock(
-                new DynamicShape(new Vec2F(0.50f, 0.035f), new Vec2F(0.224f, 0.044f)),
-                new Image(Path.Combine("Assets", "Images", "grey-block.png"))
-            );
+
         }
 
         [Test]
-        public void TestAddScoreBasedOnBlockValue() {
+        public void TestDoubleScoreActivate() {
+            var powerup = PowerUpCreator.Create(PowerUpType.DoubleScore, new Vec2F(0.1f,0.1f));
+
+            // Active double score
+            powerup.Activate();
+
+            // Add Score
             var gameEvent = new GameEvent();
             gameEvent.EventType = GameEventType.ControlEvent;
             gameEvent.Message = "ADD_SCORE";
-            gameEvent.IntArg1 = block.Value;
+            gameEvent.IntArg1 = 5;
             eventBus.RegisterEvent(gameEvent);
+
             eventBus.ProcessEvents();
 
-            Assert.That(score.Value, Is.EqualTo(block.Value));
+            Assert.AreEqual(score.Value, 10);
+
         }
     }
 }

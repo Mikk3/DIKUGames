@@ -14,14 +14,14 @@ using DIKUArcade.Timers;
 
 namespace Breakout.GameInfo {
     public class Score : IGameEventProcessor {
-        public int score { get; private set; }
+        public int Value { get; private set; }
         private Text display;
         private bool doubleScore = false;
 
 
         public Score(Vec2F position, Vec2F extent) {
-            score = 0;
-            display = new Text(score.ToString(), position, extent);
+            Value = 0;
+            display = new Text(Value.ToString(), position, extent);
             display.SetColor(new Vec3F(0.01f, 0.55f, 0.63f));
         }
         private void AddScore(int num) {
@@ -29,8 +29,8 @@ namespace Breakout.GameInfo {
                 num *= 2;
             }
 
-            score += num;
-            display.SetText(score.ToString());
+            Value += num;
+            display.SetText(Value.ToString());
         }
 
         public void RenderScore() {
