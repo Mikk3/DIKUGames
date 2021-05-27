@@ -112,7 +112,7 @@ namespace Breakout.States {
 
             // TEMP
             if (action == KeyboardAction.KeyPress && key == KeyboardKey.P) {
-                powerUpController.CreateRandomPowerup(new Vec2F(0.1f, 0.1f));
+                powerUpController.CreateRandomPowerUp(new Vec2F(0.1f, 0.1f));
             }
             ///////////////////////////////////////////////////////////////////////
 

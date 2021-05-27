@@ -43,7 +43,7 @@ namespace Breakout.Powerups
                     );
 
             }
-            throw new ArgumentException("String did not match any GameStateTypes");
+            throw new ArgumentException("Invalid state type");
         }
     }
 }

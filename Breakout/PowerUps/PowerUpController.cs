@@ -19,18 +19,18 @@ namespace Breakout.PowerUps {
             PowerUps = new EntityContainer<PowerUp>();
         }
 
-        public void CreatePowerup(PowerUpType type, Vec2F position) {
+        public void CreatePowerUp(PowerUpType type, Vec2F position) {
             var ent = PowerUpCreator.Create(type, position);
 
             PowerUps.AddEntity(ent);
         }
 
-        public void CreateRandomPowerup(Vec2F position) {
+        public void CreateRandomPowerUp(Vec2F position) {
             var numOfPowerUps = 5;
             Random rand = new Random();
             PowerUpType type = (PowerUpType) rand.Next(numOfPowerUps);
 
-            CreatePowerup(type, position);
+            CreatePowerUp(type, position);
 
         }
 
@@ -44,7 +44,7 @@ namespace Breakout.PowerUps {
             if (gameEvent.EventType == GameEventType.ControlEvent && gameEvent.Message == "CREATE_POWERUP") {
                 var pos = gameEvent.ObjectArg1;
 
-                CreateRandomPowerup((Vec2F) pos);
+                CreateRandomPowerUp((Vec2F) pos);
 
             }
         }
