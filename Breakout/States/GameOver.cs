@@ -15,6 +15,8 @@ namespace Breakout.States
         private Text button;
         private Text display;
         private bool won;
+        private Text[] menuButtons;
+        private int activeMenuButton;
 
 
 
@@ -27,11 +29,48 @@ namespace Breakout.States
             display.SetColor(new Vec3F(0.01f,0.55f, 0.63f));
             won = bool.Parse(info);
 
+            // Menu buttons
+            menuButtons = new Text[] {
+                new Text("Main Menu", new Vec2F(0.32f, 0.0f), new Vec2F(0.4f, 0.4f)),
+                new Text("Quit", new Vec2F(0.32f, -0.10f), new Vec2F(0.4f, 0.4f))
+            };
+
+            menuButtons[0].SetColor(new Vec3I(229, 192, 20));
+            menuButtons[1].SetColor(new Vec3I(255, 255, 255));
+
+            activeMenuButton = 0;
+
         }
 
         public void HandleKeyEvent(KeyboardAction action, KeyboardKey key) {
-            if (action == KeyboardAction.KeyPress && key == KeyboardKey.Enter) {
-               // Return to MainMenu
+            if (action == KeyboardAction.KeyPress) {
+                switch (key) {
+                    case KeyboardKey.Up:
+                        activeMenuButton = 0;
+                        menuButtons[1].SetColor(new Vec3I(255, 255, 255));
+                        menuButtons[0].SetColor(new Vec3I(229, 192, 20));
+                        break;
+
+                    case KeyboardKey.Down:
+                        activeMenuButton = 1;
+                        menuButtons[0].SetColor(new Vec3I(255, 255, 255));
+                        menuButtons[1].SetColor(new Vec3I(229, 192, 20));
+                        break;
+
+                    case KeyboardKey.Enter:
+                        var gameEvent = new GameEvent();
+                        if (activeMenuButton == 0) {
+                            GameRunning.DeleteInstance();
+                            gameEvent.EventType = GameEventType.GameStateEvent;
+                            gameEvent.Message = "MAIN_MENU";
+                        } else {
+                            gameEvent.EventType = GameEventType.WindowEvent;
+                            gameEvent.Message = "CLOSE_WINDOW";
+                        }
+                        BreakoutBus.GetBus().RegisterEvent(gameEvent);
+                        break;
+
+                }
             }
         }
 
@@ -47,6 +86,11 @@ namespace Breakout.States
                 lostText.SetColor(new Vec3F(0.01f,0.55f, 0.63f));
                 lostText.RenderText();
                 display.RenderText();
+            }
+
+            foreach (var button in menuButtons)
+            {
+                button.RenderText();
             }
 
 
