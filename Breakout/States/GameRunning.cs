@@ -96,26 +96,6 @@ namespace Breakout.States {
             if (action == KeyboardAction.KeyPress && key == KeyboardKey.Space) {
                 ball.Activate();
             }
-
-            /////////////////////// TEMPOARY FUNCTIONS //////////////////////////////
-            // TEMP
-            if (action == KeyboardAction.KeyPress && key == KeyboardKey.D) {
-                leveldata.Blocks.Iterate(x => {
-                    x.OnHit();
-                });
-            }
-
-            // TEMP
-            if (action == KeyboardAction.KeyPress && key == KeyboardKey.L) {
-                leveldata.NextLevel();
-            }
-
-            // TEMP
-            if (action == KeyboardAction.KeyPress && key == KeyboardKey.P) {
-                powerUpController.CreateRandomPowerUp(new Vec2F(0.1f, 0.1f));
-            }
-            ///////////////////////////////////////////////////////////////////////
-
         }
 
         public void RenderState() {
