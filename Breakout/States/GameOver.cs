@@ -12,7 +12,6 @@ namespace Breakout.States
     public class GameOver : IGameState {
 
         private Entity backgroundImage;
-        private Text button;
         private Text display;
         private bool won;
         private Text[] menuButtons;

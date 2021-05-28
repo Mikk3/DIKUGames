@@ -12,7 +12,6 @@ namespace Breakout.States {
         private Entity backgroundImage;
         private Text[] menuButtons;
         private int activeMenuButton;
-        private int maxMenuButtons;
 
         public GamePaused() {
             backgroundImage = new Entity(

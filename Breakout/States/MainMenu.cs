@@ -14,7 +14,6 @@ namespace Breakout.States
         private static MainMenu instance = null;
         private Text[] menuButtons;
         private int activeMenuButton;
-        private int maxMenuButtons;
 
 
         public MainMenu() {
