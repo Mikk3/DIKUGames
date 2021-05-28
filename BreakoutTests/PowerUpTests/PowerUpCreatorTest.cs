@@ -10,7 +10,7 @@ using Breakout.Levels;
 using Breakout.PowerUps;
 using Breakout.Powerups;
 
-namespace BreakoutTests {
+namespace BreakoutTests.PowerUpTests {
     public class PowerUpCreatorTest {
         [SetUp]
         public void Setup() {

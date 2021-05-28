@@ -7,7 +7,7 @@ using System.IO;
 using DIKUArcade.GUI;
 using Breakout.Paddle;
 
-namespace BreakoutTests {
+namespace BreakoutTests.EntityTests {
     public class PlayerTest {
 
         Player player;

@@ -9,7 +9,7 @@ using System;
 using Breakout.Levels;
 using Breakout.PowerUps;
 
-namespace BreakoutTests {
+namespace BreakoutTests.PowerUpTests {
     public class PowerUpControllerTest {
 
         PowerUpController controller;
@@ -37,11 +37,6 @@ namespace BreakoutTests {
             }
 
             Assert.AreNotEqual(oldPos, newPos);
-
-
-            //Assert.AreNotEqual(oldPosition, powerUp.Shape.Position);
-
-
         }
     }
 }

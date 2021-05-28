@@ -8,7 +8,7 @@ using DIKUArcade.GUI;
 using System;
 using Breakout.Levels;
 
-namespace BreakoutTests {
+namespace BreakoutTests.LevelLoadingTests {
     public class GeneratorTest {
         private LevelData leveldata;
 

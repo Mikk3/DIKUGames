@@ -9,7 +9,7 @@ using Breakout.Levels;
 using System.Collections.Generic;
 using System;
 
-namespace BreakoutTests {
+namespace BreakoutTests.LevelLoadingTests {
     public class ProviderTest {
         LevelData levelData;
 

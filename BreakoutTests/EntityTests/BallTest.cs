@@ -9,7 +9,7 @@ using Breakout.Ball;
 using DIKUArcade.Physics;
 using Breakout.Paddle;
 
-namespace BreakoutTests {
+namespace BreakoutTests.EntityTests {
     public class BallTest {
 
         private Ball ball;

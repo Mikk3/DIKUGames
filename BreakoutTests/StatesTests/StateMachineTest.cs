@@ -6,7 +6,7 @@ using DIKUArcade.Events;
 using System.Collections.Generic;
 using System;
 
-namespace BreakoutTests.TestGameStates {
+namespace BreakoutTests.StatesTest {
 
     public class StateMachineTest {
 

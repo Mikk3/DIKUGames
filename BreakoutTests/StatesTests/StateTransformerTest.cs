@@ -1,7 +1,7 @@
 using Breakout.States;
 using NUnit.Framework;
 
-namespace BreakoutTests.TestGameStates
+namespace BreakoutTests.StatesTest
 {
     public class StateTransformerTest
     {

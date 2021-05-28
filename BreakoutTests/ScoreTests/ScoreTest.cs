@@ -10,7 +10,7 @@ using DIKUArcade.Events;
 using System.Collections.Generic;
 using Breakout.GameInfo;
 
-namespace BreakoutTests {
+namespace BreakoutTests.ScoreTests {
     public class ScoreTest {
 
         private Block block;

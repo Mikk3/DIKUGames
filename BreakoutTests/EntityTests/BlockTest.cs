@@ -6,7 +6,7 @@ using DIKUArcade.Graphics;
 using System.IO;
 using DIKUArcade.GUI;
 
-namespace BreakoutTests {
+namespace BreakoutTests.EntityTests {
     public class BlockTest {
 
         public Block block;
