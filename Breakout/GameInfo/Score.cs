@@ -24,6 +24,7 @@ namespace Breakout.GameInfo {
             display = new Text(Value.ToString(), position, extent);
             display.SetColor(new Vec3F(0.01f, 0.55f, 0.63f));
         }
+
         private void AddScore(int num) {
             if (doubleScore) {
                 num *= 2;
@@ -33,6 +34,9 @@ namespace Breakout.GameInfo {
             display.SetText(Value.ToString());
         }
 
+        /// <summary>
+        /// Render the score text onto the game canvas
+        /// </summary>
         public void RenderScore() {
             display.RenderText();
         }

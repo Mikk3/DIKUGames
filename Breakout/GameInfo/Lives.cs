@@ -13,6 +13,9 @@ namespace Breakout.GameInfo {
             display.SetColor(new Vec3F(0.01f, 0.55f, 0.63f));
         }
 
+        /// <summary>
+        /// Render the lives text onto the game canvas
+        /// </summary>
         public void RenderLives() {
             display.RenderText();
         }

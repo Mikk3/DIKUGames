@@ -29,6 +29,9 @@ namespace Breakout.Ball {
             shape.Direction = new Vec2F(0.005f, 0.01f);
         }
 
+        /// <summary>
+        /// Moves the ball and call helper function check if its touching boundary
+        /// </summary>
         public void Move() {
             if (isActive) {
                 checkBoundary();
@@ -38,10 +41,17 @@ namespace Breakout.Ball {
             }
         }
 
+        /// <summary>
+        /// Changes the ball direction
+        /// </summary>
         public void ChangeDirection(Vec2F dir) {
             shape.Direction = dir;
         }
 
+        /// <summary>
+        /// Change direction based on the ball and players position
+        /// </summary>
+        /// <param name="player">The player object that was hit by the ball</param>
         public void CollideWithPlayer(Player player) {
             if (shape.Position.X < player.Shape.Position.X + (0.5 * player.Shape.Extent.X)) {
                 ChangeDirection(new Vec2F(Math.Abs(shape.Direction.X) * (-1), shape.Direction.Y * -1));
@@ -50,6 +60,11 @@ namespace Breakout.Ball {
             }
         }
 
+        /// <summary>
+        /// Change direction based on the ball and blocks position
+        /// </summary>
+        /// <param name="block">The block object that was hit by the ball</param>
+        /// <param name="data">Collision data</param>
         public void CollideWithBlock(Block block, CollisionData data) {
 
             switch (data.CollisionDir) {
@@ -93,6 +108,9 @@ namespace Breakout.Ball {
             }
         }
 
+        /// <summary>
+        /// Activates the ball movement
+        /// </summary>
         public void Activate() {
             if (!isActive) {
                 shape.Direction = new Vec2F(0.005f, 0.01f);
@@ -101,25 +119,25 @@ namespace Breakout.Ball {
         }
 
 
-        public void IncreaseSize() {
+        private void IncreaseSize() {
             this.shape.Extent = new Vec2F(this.shape.Extent.X*2f, this.shape.Extent.Y*2f);
             this.shape.Position = new Vec2F(
                 this.shape.Position.X + 0.5f * (this.shape.Extent.X * (this.shape.Position.X/Math.Abs(this.shape.Position.X))),
                 this.shape.Position.Y + 0.5f * (this.shape.Extent.Y * (this.shape.Position.Y/Math.Abs(this.shape.Position.Y))));
             doubleSizeEnabled = true;
         }
-        public void DecreaseSize() {
+        private void DecreaseSize() {
             this.shape.Extent = new Vec2F(0.022f, 0.022f);
             doubleSizeEnabled = false;
 
         }
 
-        public void IncreaseSpeed() {
+        private void IncreaseSpeed() {
             shape.Direction = shape.Direction * 2;
             doubleSpeedEnabled = true;
         }
 
-        public void DecreaseSpeed() {
+        private void DecreaseSpeed() {
            shape.Direction = shape.Direction / 2;
            doubleSpeedEnabled = false;
         }

@@ -13,8 +13,15 @@ namespace Breakout.Blocks {
 
         }
 
+        /// <summary>
+        /// The behavior of the block when it is hit
+        /// </summary>
         public abstract void OnHit();
 
+
+        /// <summary>
+        /// The behavior of the block when it is destroyed
+        /// </summary>
         public abstract void OnDestroy();
 
     }

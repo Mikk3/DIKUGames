@@ -28,7 +28,7 @@ namespace Breakout.Blocks {
         }
 
         public override void OnDestroy() {
-            // Change player score using event?
+            // Change player score using event
             var gameEvent = new GameEvent();
             gameEvent.EventType = GameEventType.ControlEvent;
             gameEvent.Message = "ADD_SCORE";

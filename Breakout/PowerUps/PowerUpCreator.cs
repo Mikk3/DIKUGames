@@ -10,6 +10,14 @@ namespace Breakout.Powerups
 
 {
     public class PowerUpCreator {
+
+        /// <summary>
+        /// Returns a instance of powerup with the given type and position
+        /// </summary>
+        /// <param name="type">The type of power up</param>
+        /// <param name="position">The position to create the powerup at</param>
+        /// <returns>An instance of PowerUp</returns>
+
         public static PowerUp Create (PowerUpType type, Vec2F position) {
            switch (type)
             {

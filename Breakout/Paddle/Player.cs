@@ -23,6 +23,9 @@ namespace Breakout.Paddle {
             this.shape = Shape.AsDynamicShape();
         }
 
+        /// <summary>
+        /// Check if player is inside boundary and then move it in the shapes direction
+        /// </summary>
         public void Move() {
             // Right boundary
             if (shape.Position.X > (0.975f - shape.Extent.X) && shape.Direction.X > 0.0f) {
@@ -36,6 +39,10 @@ namespace Breakout.Paddle {
             shape.Move(shape.Direction);
         }
 
+        /// <summary>
+        /// Sets the players direction to left
+        /// </summary>
+        /// <param name="val">True if player should move left, false otherwise</param>
         public void SetMoveLeft(bool val) {
             if (val) {
                 moveLeft = -MOVEMENT_SPEED;
@@ -45,6 +52,10 @@ namespace Breakout.Paddle {
             UpdateDirection();
         }
 
+        /// <summary>
+        /// Sets the players direction to right
+        /// </summary>
+        /// <param name="val">True if player should move right, false otherwise</param>
         public void SetMoveRight(bool val) {
             if (val) {
                 moveRight = MOVEMENT_SPEED;
@@ -84,6 +95,11 @@ namespace Breakout.Paddle {
             }
         }
 
+        /// <summary>
+        /// Handles the player movement and delegates to the right method based on input
+        /// </summary>
+        /// <param name="action">The keyboard action eg. press or release</param>
+        /// <param name="key">The key that was pressed</param>
         public void HandleMovement(KeyboardAction action, KeyboardKey key) {
             switch (action) {
                 case KeyboardAction.KeyPress:
@@ -98,13 +114,13 @@ namespace Breakout.Paddle {
         }
 
 
-        public void IncreaseWidth() {
+        private void IncreaseWidth() {
             this.shape.Extent = new Vec2F(this.shape.Extent.X*2f, this.shape.Extent.Y);
             this.shape.Position = new Vec2F((this.shape.Position.X) - (this.shape.Extent.X * 0.5f), this.shape.Position.Y);
             DoubleWidthEnabled = true;
 
         }
-        public void DecreaseWidth() {
+        private void DecreaseWidth() {
             this.shape.Extent = new Vec2F(this.shape.Extent.X*0.5f, this.shape.Extent.Y);
             this.shape.Position = new Vec2F((this.shape.Position.X) + (this.shape.Extent.X * 0.25f), this.shape.Position.Y);
             DoubleWidthEnabled = false;

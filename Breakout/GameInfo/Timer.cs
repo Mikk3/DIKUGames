@@ -26,6 +26,9 @@ namespace Breakout.GameInfo {
             lastTickTime = StaticTimer.GetElapsedMilliseconds();
         }
 
+        /// <summary>
+        /// Render the time limit text onto the game canvas
+        /// </summary>
         public void RenderTimeLimit() {
             display.RenderText();
         }
@@ -43,6 +46,13 @@ namespace Breakout.GameInfo {
                 System.Console.WriteLine("INFO: Time limit reached");
             }
         }
+
+        /// <summary>
+        /// Makes the timer countdown if one second has passed since last.
+        /// </summary>
+        /// <remarks>
+        /// Can be called multiple times but will only countdown when one second has passed.
+        /// </remarks>
         public void Tick() {
             if ((lastTickTime + 1000) < StaticTimer.GetElapsedMilliseconds()) {
                 CountDown();

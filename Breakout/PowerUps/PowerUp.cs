@@ -13,6 +13,9 @@ namespace Breakout.PowerUps {
             base.Shape.AsDynamicShape().Direction = new Vec2F(0.0f, -0.005f);
         }
 
+        /// <summary>
+        /// Activates the effect of the power up
+        /// </summary>
         public abstract void Activate();
     }
 }
