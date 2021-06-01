@@ -11,7 +11,13 @@ namespace Breakout.States {
             ActiveState = new MainMenu();
         }
 
-        private void SwitchState(GameStateType stateType, int arg = 0, string info = "") {
+        /// <summary>
+        /// Given a statetype switches the active state
+        /// </summary>
+        /// <param name="stateType">Gamestate type</param>
+        /// <param name="intArg">Optional int argument</param>
+        /// <param name="stringArg">Optional string argument</param>
+        private void SwitchState(GameStateType stateType, int intArg = 0, string stringArg = "") {
             switch (stateType) {
                 case GameStateType.GameRunning:
                     ActiveState = GameRunning.GetInstance();
@@ -26,7 +32,7 @@ namespace Breakout.States {
                     StaticTimer.RestartTimer();
                     return;
                 case GameStateType.GameOver:
-                    ActiveState = new GameOver(arg, info);
+                    ActiveState = new GameOver(intArg, stringArg);
                     StaticTimer.RestartTimer();
                     return;
             }

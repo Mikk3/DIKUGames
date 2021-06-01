@@ -18,7 +18,6 @@ namespace Breakout.GameInfo {
         private Text display;
         private long lastTickTime;
 
-
         public Timer(Vec2F position, Vec2F extent, int timeLimit) {
             this.TimeLimit = timeLimit;
             display = new Text(TimeLimit.ToString(), position, extent);

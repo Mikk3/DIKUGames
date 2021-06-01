@@ -38,6 +38,10 @@ namespace Breakout.Levels {
 
         }
 
+        /// <summary>
+        /// Dequeue the next level from the LevelQueue and loads the blocks and timer for the level
+        /// if no more levels are left a WON_GAME gameEvent is sent.
+        /// </summary>
         public void NextLevel() {
             if (LevelQueue.TryDequeue(out string levelname)) {
                 level = levelname;
@@ -56,6 +60,10 @@ namespace Breakout.Levels {
             }
         }
 
+        /// <summary>
+        /// Call parsers and generator to construct the block container
+        /// If the level is not found or invalid the user is send back to main menu.
+        /// </summary>
         private void createBlocks() {
             try {
                 var data = new Provider(level).GetDataAsList();
@@ -75,7 +83,6 @@ namespace Breakout.Levels {
         }
 
         private void loadMainMenu() {
-            System.Console.WriteLine("INFO: Returning to Main Menu");
             var gameEvent = new GameEvent();
             gameEvent.EventType = GameEventType.GameStateEvent;
             gameEvent.Message = "MAIN_MENU";
@@ -94,13 +101,20 @@ namespace Breakout.Levels {
             }
         }
 
+        /// <summary>
+        /// Check if level is over and switches to next level.
+        /// </summary>
         public void CheckLevelOver() {
             var count = 0;
+
+            // Counts the number of breakable blocks.
             foreach (var block in Blocks) {
                 if (block.GetType() != typeof(UnbreakableBlock)) {
                     count++;
                 }
             }
+
+            // If count is zero, no breakable blocks are left.
             if (count == 0) {
                 NextLevel();
             }

@@ -26,7 +26,7 @@ namespace Breakout.Ball {
         public Ball(DynamicShape shape, IBaseImage image) : base(shape, image) {
             isActive = false;
             this.shape = base.Shape.AsDynamicShape();
-            shape.Direction = new Vec2F(0.005f, 0.01f);
+            shape.Direction = new Vec2F(0.007f, 0.015f);
         }
 
         /// <summary>
@@ -113,11 +113,10 @@ namespace Breakout.Ball {
         /// </summary>
         public void Activate() {
             if (!isActive) {
-                shape.Direction = new Vec2F(0.005f, 0.01f);
+                shape.Direction = new Vec2F(0.007f, 0.015f);
                 isActive = true;
             }
         }
-
 
         private void IncreaseSize() {
             this.shape.Extent = new Vec2F(this.shape.Extent.X*2f, this.shape.Extent.Y*2f);
@@ -126,6 +125,7 @@ namespace Breakout.Ball {
                 this.shape.Position.Y + 0.5f * (this.shape.Extent.Y * (this.shape.Position.Y/Math.Abs(this.shape.Position.Y))));
             doubleSizeEnabled = true;
         }
+
         private void DecreaseSize() {
             this.shape.Extent = new Vec2F(0.022f, 0.022f);
             doubleSizeEnabled = false;

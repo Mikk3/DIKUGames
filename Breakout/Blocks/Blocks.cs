@@ -9,15 +9,12 @@ namespace Breakout.Blocks {
         public int Health { get; internal set; }
         public int Value { get; internal set; }
 
-        public Block(Shape shape, IBaseImage image) : base(shape, image) {
-
-        }
+        public Block(Shape shape, IBaseImage image) : base(shape, image) {}
 
         /// <summary>
         /// The behavior of the block when it is hit
         /// </summary>
         public abstract void OnHit();
-
 
         /// <summary>
         /// The behavior of the block when it is destroyed

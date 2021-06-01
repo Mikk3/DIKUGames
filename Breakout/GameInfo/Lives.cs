@@ -7,6 +7,7 @@ namespace Breakout.GameInfo {
     public class Lives : IGameEventProcessor {
         public int Value { get; private set; }
         private Text display;
+
         public Lives(Vec2F position, Vec2F extent) {
             Value = 3;
             display = new Text(Value.ToString(), position, extent);

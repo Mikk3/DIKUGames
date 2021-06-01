@@ -16,6 +16,10 @@ namespace Breakout.Levels {
             this.levelName = levelName;
         }
 
+        /// <summary>
+        /// Get content of files as a list whereby each line is a list entry
+        /// </summary>
+        /// <returns>List of strings</returns>
         public List<string> GetDataAsList() {
             var path = Path.Combine(FileIO.GetProjectPath(), "Assets", "Levels", levelName);
             return File.ReadAllLines(path).ToList<string>();

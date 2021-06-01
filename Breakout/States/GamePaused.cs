@@ -14,11 +14,13 @@ namespace Breakout.States {
         private int activeMenuButton;
 
         public GamePaused() {
+            // Background
             backgroundImage = new Entity(
                 new StationaryShape(new Vec2F(0f, 0f), new Vec2F(1f, 1f)),
                 new Image(Path.Combine("Assets", "Images", "shipit_titlescreen.png"))
             );
 
+            // Menu buttons
             menuButtons = new Text[] {
                 new Text("Resume", new Vec2F(0.22f, 0.3f), new Vec2F(0.4f, 0.4f)),
                 new Text("Main Menu", new Vec2F(0.22f, 0.20f), new Vec2F(0.4f, 0.4f))

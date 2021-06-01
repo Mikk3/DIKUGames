@@ -4,6 +4,12 @@ namespace Breakout.States
 
 {
     public class StateTransformer {
+
+        /// <summary>
+        /// Given a string returns the corresponding gamestate type
+        /// </summary>
+        /// <param name="state">State name</param>
+        /// <returns>Corresponding gamestate type</returns>
         public static GameStateType TransformStringToState (string state) {
            switch (state)
             {
@@ -18,6 +24,12 @@ namespace Breakout.States
             }
             throw new ArgumentException("String did not match any GameStateTypes");
         }
+
+        /// <summary>
+        /// Given a gamestatetype returns the corresponding string.
+        /// </summary>
+        /// <param name="state">State name</param>
+        /// <returns>Corresponding gamestatetype as a string</returns>
         public static string TransformStateToString (GameStateType state) {
            switch (state)
             {

@@ -113,7 +113,6 @@ namespace Breakout.Paddle {
             }
         }
 
-
         private void IncreaseWidth() {
             this.shape.Extent = new Vec2F(this.shape.Extent.X*2f, this.shape.Extent.Y);
             this.shape.Position = new Vec2F((this.shape.Position.X) - (this.shape.Extent.X * 0.5f), this.shape.Position.Y);

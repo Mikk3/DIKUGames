@@ -11,7 +11,7 @@ namespace Breakout
     public class Collisions {
 
         /// <summary>
-        /// Call blocs OnHit method and balls CollideWithBlock method on collision.
+        /// Call blocks OnHit method and balls CollideWithBlock method on collision.
         /// </summary>
         /// <param name="blocks">The EntityContainer that contains blocks</param>
         /// <param name="player">The player object</param>
